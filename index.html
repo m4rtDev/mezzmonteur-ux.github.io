@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mezz - Portfolio</title>
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: rgba(255, 255, 255, 0.05);
+      --line: rgba(255, 255, 255, 0.12);
+      --line-strong: rgba(255, 255, 255, 0.24);
+      --text: #f5f1e8;
+      --muted: rgba(245, 241, 232, 0.68);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.12), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(255,255,255,.08), transparent 24%),
+        linear-gradient(180deg, #020202 0%, #060606 48%, #030303 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    .ambient-stage,
+    .page-noise,
+    .page-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .ambient-stage { z-index: -2; overflow: hidden; }
+    .page-noise { z-index: -1; opacity: .06; background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 120px 120px; }
+    .page-glow { z-index: -1; filter: blur(70px); }
+    .page-glow-left { background: radial-gradient(circle at 15% 12%, rgba(255,255,255,.12), transparent 30%); }
+    .page-glow-right { background: radial-gradient(circle at 85% 30%, rgba(255,255,255,.1), transparent 26%); }
+
+    .ambient-orb,
+    .ambient-grid,
+    .ambient-beams span,
+    .ambient-particles span { position: absolute; }
+    .ambient-orb { border-radius: 50%; mix-blend-mode: screen; }
+    .ambient-orb-one { top: -12rem; left: -8rem; width: 34rem; height: 34rem; background: radial-gradient(circle, rgba(255,255,255,.15), transparent 65%); animation: driftOrb 18s ease-in-out infinite alternate; }
+    .ambient-orb-two { right: -10rem; top: 22vh; width: 30rem; height: 30rem; background: radial-gradient(circle, rgba(255,255,255,.1), transparent 68%); animation: driftOrbReverse 22s ease-in-out infinite alternate; }
+    .ambient-grid { inset: 0; opacity: .08; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px); background-size: 90px 90px; transform: perspective(800px) rotateX(72deg) translateY(38vh) scale(1.7); animation: pulseGrid 10s ease-in-out infinite; }
+    .ambient-beams { position: absolute; inset: 0; }
+    .ambient-beams span { width: 1px; height: 150vh; top: -20vh; background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,.18) 18%, rgba(255,255,255,.02) 56%, transparent 100%); opacity: .45; transform: rotate(14deg); }
+    .ambient-beams span:nth-child(1) { left: 16%; animation: beamFloat 16s linear infinite; }
+    .ambient-beams span:nth-child(2) { left: 52%; animation: beamFloat 22s linear infinite reverse; }
+    .ambient-beams span:nth-child(3) { left: 84%; animation: beamFloat 19s linear infinite; }
+    .ambient-particles { position: absolute; inset: 0; }
+    .ambient-particles span { width: 8px; height: 8px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.92), rgba(255,255,255,.08)); box-shadow: 0 0 18px rgba(255,255,255,.3); }
+    .ambient-particles span:nth-child(1) { top: 18%; left: 12%; animation: particleRise 13s linear infinite; }
+    .ambient-particles span:nth-child(2) { top: 64%; left: 22%; width: 6px; height: 6px; animation: particleRise 17s linear infinite 2s; }
+    .ambient-particles span:nth-child(3) { top: 28%; right: 18%; animation: particleRise 15s linear infinite 1s; }
+    .ambient-particles span:nth-child(4) { top: 74%; right: 12%; width: 5px; height: 5px; animation: particleRise 19s linear infinite 3s; }
+    .ambient-particles span:nth-child(5) { top: 52%; left: 58%; width: 4px; height: 4px; animation: particleRise 14s linear infinite 4s; }
+    .ambient-particles span:nth-child(6) { top: 84%; left: 76%; width: 7px; height: 7px; animation: particleRise 18s linear infinite 6s; }
+
+    .page {
+      width: min(calc(100% - 32px), 1180px);
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .section {
+      margin-bottom: 22px;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 36px;
+      padding: 48px;
+      min-height: calc(100vh - 56px);
+      align-items: center;
+    }
+
+    .eyebrow, .label {
+      margin: 0;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      font-size: .72rem;
+      color: var(--muted);
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: -.04em;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(4.6rem, 14vw, 9rem);
+      line-height: .9;
+      text-transform: lowercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(2.3rem, 4.6vw, 4.2rem);
+      line-height: .98;
+    }
+
+    .hero-role { margin: 0 0 18px; font-size: 1.2rem; color: rgba(255,255,255,.84); }
+    .copy { margin: 0; color: var(--muted); line-height: 1.75; }
+    .hero-bio { max-width: 640px; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 30px 0 36px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 0 24px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      transition: .18s ease;
+    }
+
+    .btn-primary { background: #fff; color: #080808; }
+    .btn-secondary { background: rgba(255,255,255,.02); }
+    .btn:hover, .card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.4); }
+
+    .meta-grid,
+    .cards-2,
+    .cards-3,
+    .video-grid,
+    .contact-grid { display: grid; gap: 18px; }
+
+    .meta-grid { grid-template-columns: repeat(2, 1fr); max-width: 560px; }
+    .meta-card, .card {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+      border-radius: 24px;
+    }
+
+    .meta-card { padding: 18px 20px; }
+    .meta-card span { display: block; margin-bottom: 8px; font-size: 1.4rem; font-family: Georgia, "Times New Roman", serif; }
+
+    .hero-visual { display: grid; gap: 18px; justify-items: end; }
+    .profile-shell { width: min(100%, 420px); aspect-ratio: 4/5; padding: 18px; border-radius: 40px; border: 1px solid var(--line-strong); background: linear-gradient(155deg, rgba(255,255,255,.18), rgba(255,255,255,.02) 45%), linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); overflow: hidden; }
+    .profile-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 28px; }
+    .hero-note { width: min(100%, 320px); padding: 18px 20px; border-radius: 24px; border: 1px solid var(--line); background: rgba(255,255,255,.04); }
+
+    .cards-2 { grid-template-columns: repeat(2, 1fr); padding: 18px; }
+    .cards-3 { grid-template-columns: repeat(3, 1fr); }
+    .panel { padding: 28px; }
+    .software-list { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 0; list-style: none; }
+    .software-list li { padding: 14px 16px; border-radius: 14px; background: rgba(255,255,255,.04); }
+    .discord-white { background: #fff; color: #080808; }
+
+    .content-section { padding: 32px; }
+    .heading-split { display: grid; grid-template-columns: 1fr 420px; gap: 18px; align-items: end; margin-bottom: 24px; }
+    .heading { display: grid; gap: 8px; margin-bottom: 24px; }
+    .service-card { padding: 24px; min-height: 240px; }
+    .service-index { display: inline-flex; margin-bottom: 36px; color: rgba(255,255,255,.4); font-family: Georgia, "Times New Roman", serif; }
+    .service-card h3 { margin: 0 0 12px; font-size: 2rem; }
+
+    .video-grid { grid-template-columns: repeat(2, 1fr); }
+    .video-card { overflow: hidden; }
+    .video-thumb { position: relative; aspect-ratio: 16/10; display: grid; place-items: end start; padding: 18px; background: linear-gradient(160deg, #151515, #050505 58%, #101010 100%); }
+    .video-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.92) contrast(1.02); }
+    .video-thumb::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.48)), linear-gradient(135deg, rgba(255,255,255,.06), transparent 36%); }
+    .video-thumb::after { content: ""; position: absolute; inset: 18px; border: 1px solid rgba(255,255,255,.12); border-radius: 18px; }
+    .video-thumb span { position: relative; z-index: 1; padding: 10px 12px; border-radius: 999px; background: rgba(255,255,255,.08); font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; }
+    .video-body { display: none; }
+
+    .cards-3.collab-list { grid-template-columns: repeat(2, 1fr); }
+    .collab-card { display: flex; align-items: center; gap: 18px; padding: 22px 24px; }
+    .avatar { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.14); flex: 0 0 auto; }
+    .collab-copy { display: grid; gap: 4px; flex: 1 1 auto; }
+    .collab-copy h3 { margin: 0; font-size: 1.65rem; }
+    .collab-action { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: rgba(148,34,46,.32); border: 1px solid rgba(255,112,112,.18); color: #ff7e7e; flex: 0 0 auto; }
+    .collab-action svg { width: 21px; height: 21px; }
+
+    .contact-grid { grid-template-columns: repeat(4, 1fr); }
+    .contact-card { padding: 20px; }
+    .contact-card strong { display: block; margin-top: 10px; font-size: 1.05rem; line-height: 1.4; }
+    .footer { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 18px 24px; }
+
+    @keyframes driftOrb { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(5vw,6vh,0) scale(1.15); } }
+    @keyframes driftOrbReverse { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(-7vw,-4vh,0) scale(1.12); } }
+    @keyframes pulseGrid { 0%,100% { opacity: .05; } 50% { opacity: .11; } }
+    @keyframes beamFloat { from { transform: translateY(-5%) rotate(14deg); opacity: .15; } 50% { opacity: .45; } to { transform: translateY(7%) rotate(14deg); opacity: .12; } }
+    @keyframes particleRise { 0% { transform: translate3d(0,12px,0) scale(.75); opacity: 0; } 20% { opacity: .65; } 80% { opacity: .22; } 100% { transform: translate3d(18px,-60px,0) scale(1.2); opacity: 0; } }
+
+    @media (max-width: 1024px) {
+      .hero, .cards-2, .cards-3, .video-grid, .contact-grid, .heading-split { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding: 40px 28px; }
+      .hero-visual { justify-items: start; }
+      .profile-shell, .hero-note { width: 100%; }
+      .content-section { padding: 24px; }
+    }
+
+    @media (max-width: 720px) {
+      .page { width: min(calc(100% - 20px), 1180px); padding-top: 10px; padding-bottom: 20px; }
+      .hero { padding: 26px 20px; gap: 24px; }
+      .meta-grid, .software-list { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-stage" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-one"></div>
+    <div class="ambient-orb ambient-orb-two"></div>
+    <div class="ambient-grid"></div>
+    <div class="ambient-beams"><span></span><span></span><span></span></div>
+    <div class="ambient-particles"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  </div>
+  <div class="page-noise" aria-hidden="true"></div>
+  <div class="page-glow page-glow-left" aria-hidden="true"></div>
+  <div class="page-glow page-glow-right" aria-hidden="true"></div>
+
+  <main class="page" id="top">
+    <section class="section hero">
+      <div>
+        
+        <h1>mezz</h1>
+        <p class="hero-role">Monteur video</p>
+        <p class="copy hero-bio">Je transforme des idées brutes en montages courts et nets, intenses et memorables. Ce portfolio montre se que je sais faire, prete a accueillir ta vraie image.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#portfolio">Voir la selection</a>
+          <a class="btn btn-secondary" href="#contact">Me contacter</a>
+          <button class="btn discord-white" type="button" onclick="copyDiscordTag()">Copier mon pseudo Discord</button>
+        </div>
+        <div class="meta-grid">
+          <article class="meta-card"><span>Shorts</span><p class="copy">Formats rapides et impactants</p></article>
+          <article class="meta-card"><span>TikTok</span><p class="copy">Hook, rythme, retention</p></article>
+          <article class="meta-card"><span>Trailers</span><p class="copy">Montages de lancement et reveal</p></article>
+          <article class="meta-card"><span>Intros</span><p class="copy">Identites video courtes et propres</p></article>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="profile-shell">
+          <img class="profile-photo" src="./pp_de_mezz.png" alt="Portrait de mezz">
+        </div>
+        <div class="hero-note">
+          
+          <p class="copy" style="margin-top:10px;">"Never give in. Never give in. Never, never, never, never—in nothing, great or small, large or petty—never give in, except to convictions of honour and good sense."</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cards-2">
+      <article class="card panel">
+        
+        <h2 style="margin:14px 0 18px;">Mes outils de travail</h2>
+        <ul class="software-list">
+          <li>Adobe Premiere Pro</li>
+          <li>Adobe After Effects</li>
+          <li>Adobe Audition</li>
+        </ul>
+      </article>
+      <article class="card panel">
+        
+        <h2 style="margin:14px 0 18px;">Des formats courts avec une presence visuelle claire.</h2>
+      </article>
+    </section>
+
+    <section class="section content-section">
+      <div class="heading">
+        <p class="eyebrow">Services</p>
+        <h2>Formats maitrises</h2>
+      </div>
+      <div class="cards-3">
+        <article class="card service-card"><span class="service-index">01</span><h3>Montage court</h3><p class="copy">Coupe precise, tempo fort et structure pensee pour retenir l'attention des premieres secondes.</p></article>
+        <article class="card service-card"><span class="service-index">02</span><h3>Packaging video</h3><p class="copy">Habillage, transitions, sous-titres, sound design et finition visuelle coherente.</p></article>
+        <article class="card service-card"><span class="service-index">03</span><h3>Direction creative</h3><p class="copy">Une presentation plus premium pour donner a la chaine, au reel ou au projet une vraie presence.</p></article>
+      </div>
+    </section>
+
+    <section class="section content-section" id="portfolio">
+      <div class="heading">
+        <div>
+          
+          <h2>Montages réaliser</h2>
+        </div>
+      </div>
+      <div class="video-grid">
+        <a class="card video-card" href="https://youtu.be/-_bcmHst_Yc" target="_blank" rel="noreferrer"><div class="video-thumb"><img src="https://img.youtube.com/vi/-_bcmHst_Yc/hqdefault.jpg" alt=""><span>Voir</span></div></a>
+        <a class="card video-card" href="https://youtu.be/fMvX_PeXom4" target="_blank" rel="noreferrer"><div class="video-thumb"><img src="https://img.youtube.com/vi/fMvX_PeXom4/hqdefault.jpg" alt=""><span>Voir</span></div></a>
+        <a class="card video-card" href="https://youtu.be/qulAzY_eMTE" target="_blank" rel="noreferrer"><div class="video-thumb"><img src="https://img.youtube.com/vi/qulAzY_eMTE/hqdefault.jpg" alt=""><span>Voir</span></div></a>
+        <a class="card video-card" href="https://youtu.be/sFIP1reqB_4" target="_blank" rel="noreferrer"><div class="video-thumb"><img src="https://img.youtube.com/vi/sFIP1reqB_4/hqdefault.jpg" alt=""><span>Voir</span></div></a>
+        <a class="card video-card" href="https://youtu.be/AfmDTQgVIVk" target="_blank" rel="noreferrer"><div class="video-thumb"><img src="https://img.youtube.com/vi/AfmDTQgVIVk/hqdefault.jpg" alt=""><span>Voir</span></div></a>
+        <a class="card video-card" href="https://youtu.be/cbgoe5sceXk" target="_blank" rel="noreferrer"><div class="video-thumb"><img src="https://img.youtube.com/vi/cbgoe5sceXk/hqdefault.jpg" alt=""><span>Voir</span></div></a>
+      </div>
+    </section>
+
+    <section class="section content-section">
+      <div class="heading">
+        <p class="eyebrow">Collaborations</p>
+        <h2>ils m'ont fait confiance</h2>
+      </div>
+      <div class="cards-3 collab-list">
+        <a class="card collab-card" href="https://www.youtube.com/@cubi-game6913" target="_blank" rel="noreferrer"><img class="avatar" src="https://yt3.googleusercontent.com/einN5wa9bMaQ_-cna0F8ZrExNG9nvBKZnCZCObLQHOOsYnmsMiZt9l8G0inbGP9t2uxmLR9JcA=s160-c-k-c0x00ffffff-no-rj" alt=""><div class="collab-copy"><h3>Cubi Game</h3><p class="copy">youtuber</p></div><span class="collab-action" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 8.5v7l6-3.5-6-3.5Z" fill="currentColor"></path><path d="M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Zm-1.6 0A8.4 8.4 0 1 0 12 20.4 8.4 8.4 0 0 0 20.4 12Z" fill="currentColor"></path></svg></span></a>
+        <a class="card collab-card" href="https://www.youtube.com/@StickOnThePlace" target="_blank" rel="noreferrer"><img class="avatar" src="https://yt3.googleusercontent.com/QHR_66W9GHkWd966LnzauXfYa8xtqAjV_SJcVWWtG3ptaMCLqdMIwWJ2xcpQBoEjCorTKJKf=s160-c-k-c0x00ffffff-no-rj" alt=""><div class="collab-copy"><h3>Stick On The Place</h3><p class="copy">youtuber</p></div><span class="collab-action" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 8.5v7l6-3.5-6-3.5Z" fill="currentColor"></path><path d="M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10Zm-1.6 0A8.4 8.4 0 1 0 12 20.4 8.4 8.4 0 0 0 20.4 12Z" fill="currentColor"></path></svg></span></a>
+      </div>
+    </section>
+
+    <section class="section content-section" id="contact">
+      <div class="heading">
+        <div>
+          <p class="eyebrow"></p>
+          <h2>Contact :</h2>
+        </div>
+      </div>
+      <div class="contact-grid">
+        <a class="card contact-card" href="#"><span class="label">Discord</span><strong>jesappellemezz</strong></a>
+        <a class="card contact-card" href="https://x.com/i/status/2033200072565912030" target="_blank" rel="noreferrer"><span class="label">X / Twitter</span><strong>Voir le post</strong></a>
+        <a class="card contact-card" href="https://www.youtube.com/@mezzmonteur" target="_blank" rel="noreferrer"><span class="label">YouTube</span><strong>@mezzmonteur</strong></a>
+        <a class="card contact-card" href="https://www.youtube.com/playlist?list=PLr6Ba9RZO-sZ-AjnjAxozsWwqyTn204Md" target="_blank" rel="noreferrer"><span class="label">Playlist</span><strong>Playlist complete</strong></a>
+      </div>
+    </section>
+
+    <footer class="section footer">
+      <p class="copy">Portfolio de mezz - montage video</p>
+      <a href="#top">Revenir en haut</a>
+    </footer>
+  </main>
+</body>
+<script>
+  function copyDiscordTag() {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText('jesappellemezz').catch(function () {});
+    }
+  }
+</script>
+</html>
