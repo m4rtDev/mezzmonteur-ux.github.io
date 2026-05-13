@@ -82,8 +82,8 @@ const portfolioContent = {
     },
     {
       format: 'Selection client',
-      href: 'https://youtu.be/cbgoe5sceXk',
-      thumbnail: getYouTubeThumbnail('https://youtu.be/cbgoe5sceXk'),
+      href: 'https://www.youtube.com/shorts/mXBvYss0AVI',
+      thumbnail: getYouTubeThumbnail('https://www.youtube.com/shorts/mXBvYss0AVI'),
     },
   ],
   collaborations: [
