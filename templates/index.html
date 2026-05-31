@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mezz — Monteur Video</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>M</text></svg>">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">mezz</a>
+            <div class="nav-links">
+                <a href="#services">Services</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#collab">Collab</a>
+                <a href="#reviews">Avis</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="menu-toggle" aria-label="Menu">☰</button>
+        </div>
+    </nav>
+
+    <section class="hero" id="top">
+        <div class="hero-inner">
+            <p class="hero-label">MONTEUR VIDEO</p>
+            <h1 class="hero-title">
+                mezz
+            </h1>
+            <p class="hero-sub">Montage percutant. Image maîtrisée.</p>
+            <p class="hero-desc">
+                Je transforme des idées brutes en montages courts et nets, intenses et mémorables.
+            </p>
+            <div class="hero-btns">
+                <a href="#portfolio" class="btn btn-primary">Voir la sélection</a>
+                <a href="#contact" class="btn btn-outline">Me contacter</a>
+            </div>
+        </div>
+        <div class="hero-scroll">SCROLL</div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-label">Services</p>
+                <h2>Formats <span class="outline">maîtrisés</span></h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal" style="transition-delay:0.1s">
+                    <span class="service-number">01</span>
+                    <h3>Montage court</h3>
+                    <p>Coupe précise, tempo fort et structure pensée pour retenir l'attention dès les premières secondes.</p>
+                </div>
+                <div class="service-card reveal" style="transition-delay:0.2s">
+                    <span class="service-number">02</span>
+                    <h3>Packaging video</h3>
+                    <p>Habillage, transitions, sous-titres, sound design et finition visuelle cohérente.</p>
+                </div>
+                <div class="service-card reveal" style="transition-delay:0.3s">
+                    <span class="service-number">03</span>
+                    <h3>Direction creative</h3>
+                    <p>Une présentation premium pour donner à la chaîne, au reel ou au projet une vraie présence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tools">
+        <div class="container">
+            <div class="tools-content reveal">
+                <p class="section-label">Outils</p>
+                <h2>Mes outils <span class="outline">de travail</span></h2>
+                <div class="tools-list">
+                    <span>Adobe Premiere Pro</span>
+                    <span>Adobe After Effects</span>
+                    <span>Adobe Audition</span>
+                </div>
+                <blockquote class="tools-quote">
+                    &ldquo;Never give in. Never give in. Never, never, never, never&mdash;in nothing, great or small&mdash;never give in, except to convictions of honour and good sense.&rdquo;
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-label">Portfolio</p>
+                <h2>Montages <span class="outline">réalisés</span></h2>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.05s">
+                    <div class="portfolio-thumb">
+                        <img src="https://img.youtube.com/vi/-_bcmHst_Yc/hqdefault.jpg" alt="Video" loading="lazy">
+                        <a href="https://youtu.be/-_bcmHst_Yc" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
+                    </div>
+                </div>
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.1s">
+                    <div class="portfolio-thumb">
+                        <img src="https://img.youtube.com/vi/fMvX_PeXom4/hqdefault.jpg" alt="Video" loading="lazy">
+                        <a href="https://youtu.be/fMvX_PeXom4" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
+                    </div>
+                </div>
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.15s">
+                    <div class="portfolio-thumb">
+                        <img src="https://img.youtube.com/vi/qulAzY_eMTE/hqdefault.jpg" alt="Video" loading="lazy">
+                        <a href="https://youtu.be/qulAzY_eMTE" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
+                    </div>
+                </div>
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.2s">
+                    <div class="portfolio-thumb">
+                        <img src="https://img.youtube.com/vi/sFIP1reqB_4/hqdefault.jpg" alt="Video" loading="lazy">
+                        <a href="https://youtu.be/sFIP1reqB_4" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
+                    </div>
+                </div>
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.25s">
+                    <div class="portfolio-thumb">
+                        <img src="https://img.youtube.com/vi/AfmDTQgVIVk/hqdefault.jpg" alt="Video" loading="lazy">
+                        <a href="https://youtu.be/AfmDTQgVIVk" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
+                    </div>
+                </div>
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.3s">
+                    <div class="portfolio-thumb">
+                        <img src="https://img.youtube.com/vi/cbgoe5sceXk/hqdefault.jpg" alt="Video" loading="lazy">
+                        <a href="https://youtu.be/cbgoe5sceXk" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-more reveal">
+                <a href="https://www.youtube.com/playlist?list=PLr6Ba9RZO-sZ-AjnjAxozsWwqyTn204Md" target="_blank" rel="noopener" class="btn btn-outline">Playlist complète →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-label">Avis</p>
+                <h2>Ce qu'ils <span class="outline">en disent</span></h2>
+            </div>
+            <div class="rv-wrap reveal" id="rvList"></div>
+            <div class="rv-form reveal" id="rvForm">
+                <div id="rvLoggedOut">
+                    <p style="color:var(--g500);margin-bottom:16px">Connecte-toi pour laisser un avis.</p>
+                    <button class="btn btn-outline" onclick="showAuthModal()">Connexion / Inscription</button>
+                </div>
+                <div id="rvLoggedIn" style="display:none">
+                    <p style="color:var(--g500);margin-bottom:12px">Connecté en tant que <strong id="rvUser" style="color:var(--black)"></strong> <a href="#" onclick="logout();return false" style="color:var(--g400);font-size:.8rem;margin-left:12px;text-decoration:underline">Déconnexion</a></p>
+                    <div class="rv-stars" id="rvStars">
+                        <span data-s="1">☆</span><span data-s="2">☆</span><span data-s="3">☆</span><span data-s="4">☆</span><span data-s="5">☆</span>
+                    </div>
+                    <textarea id="rvContent" placeholder="Écris ton avis..." rows="3" style="width:100%;padding:12px 16px;border:2px solid var(--g200);font-family:var(--font);font-size:.9rem;outline:none;resize:vertical;margin:12px 0;transition:border-color .3s" onfocus="this.style.borderColor='#000'" onblur="this.style.borderColor='var(--g200)'"></textarea>
+                    <button class="btn btn-primary" onclick="submitReview()" id="rvSubmitBtn">Publier l'avis</button>
+                    <p id="rvMsg" style="font-size:.85rem;margin-top:8px"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="authModal" class="modal" style="display:none">
+        <div class="modal-bg" onclick="hideAuthModal()"></div>
+        <div class="modal-box">
+            <button class="modal-x" onclick="hideAuthModal()">✕</button>
+            <div class="modal-tabs">
+                <button class="mtab ac" data-t="login" onclick="switchTab('login')">Connexion</button>
+                <button class="mtab" data-t="register" onclick="switchTab('register')">Inscription</button>
+            </div>
+            <form id="loginForm" onsubmit="return authSubmit('login')">
+                <input type="text" placeholder="Pseudo" required class="modal-in">
+                <input type="password" placeholder="Mot de passe" required class="modal-in">
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Se connecter</button>
+                <p class="modal-err"></p>
+            </form>
+            <form id="registerForm" style="display:none" onsubmit="return authSubmit('register')">
+                <input type="text" placeholder="Pseudo" required class="modal-in" minlength="2">
+                <input type="password" placeholder="Mot de passe (4+)" required class="modal-in" minlength="4">
+                <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Créer un compte</button>
+                <p class="modal-err"></p>
+            </form>
+        </div>
+    </div>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-label">Collaborations</p>
+                <h2>Ils m'ont <span class="outline">fait confiance</span></h2>
+            </div>
+            <div class="collab-grid">
+                <a href="https://www.youtube.com/@cubi-game6913" target="_blank" rel="noopener" class="collab-card reveal-left" style="transition-delay:0.1s">
+                    <div class="collab-avatar">
+                        <img src="https://yt3.googleusercontent.com/einN5wa9bMaQ_-cna0F8ZrExNG9nvBKZnCZCObLQHOOsYnmsMiZt9l8G0inbGP9t2uxmLR9JcA=s160-c-k-c0x00ffffff-no-rj" alt="Cubi Game" loading="lazy">
+                    </div>
+                    <div class="collab-info">
+                        <h3>Cubi Game</h3>
+                        <span>Influenceur</span>
+                    </div>
+                </a>
+                <a href="https://www.youtube.com/@StickOnThePlace" target="_blank" rel="noopener" class="collab-card reveal-right" style="transition-delay:0.2s">
+                    <div class="collab-avatar">
+                        <img src="https://yt3.googleusercontent.com/R5N_tGfLAab49iqHK6BfvVW_jr8749gIKCWH1dE57E0e2FIbyk6wTtMCtfRrAYEPzsTEFayQ=s160-c-k-c0x00ffffff-no-rj" alt="Stick On The Place" loading="lazy">
+                    </div>
+                    <div class="collab-info">
+                        <h3>Stick On The Place</h3>
+                        <span>Influenceur</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content reveal">
+                <p class="section-label">Contact</p>
+                <h2>Parlons <span class="outline">de ton projet</span></h2>
+                <div class="contact-links">
+                    <a href="https://discord.com/users/887946326776643615" target="_blank" rel="noopener" class="btn btn-primary">Discord — xmezzedv</a>
+                    <div class="contact-social">
+                        <a href="https://x.com/i/status/2033200072565912030" target="_blank" rel="noopener">X / Twitter</a>
+                        <a href="https://www.youtube.com/@mezzmonteur" target="_blank" rel="noopener">YouTube</a>
+                        <a href="https://www.youtube.com/playlist?list=PLr6Ba9RZO-sZ-AjnjAxozsWwqyTn204Md" target="_blank" rel="noopener">Playlist</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p class="footer-copy">© 2025 — mezz</p>
+            <a href="#top" class="footer-top">Revenir en haut ↑</a>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/tracker.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
