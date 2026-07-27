@@ -1,6 +1,8 @@
 var debugMode = false; // todo remove
 
 document.addEventListener('DOMContentLoaded', function() {
+    var isTouch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+
     var toggle = document.querySelector('.menu-toggle');
     var navLinks = document.querySelector('.nav-links');
     if (toggle && navLinks) {
@@ -17,8 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     var navbar = document.querySelector('.navbar');
+    var progressBar = document.getElementById('progressBar');
     window.addEventListener('scroll', function() {
         navbar.classList.toggle('scrolled', window.scrollY > 80);
+        if (progressBar) {
+            var doc = document.documentElement;
+            var max = doc.scrollHeight - doc.clientHeight;
+            var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+            progressBar.style.width = pct + '%';
+        }
     }, { passive: true });
 
     var ro = new IntersectionObserver(function(e) {
@@ -35,15 +44,56 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    document.querySelectorAll('.service-card').forEach(function(card) {
-        card.addEventListener('mousemove', function(e) {
-            var r = card.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-            card.style.transform = 'translateY(-4px) perspective(600px) rotateY(' + ((x - r.width / 2) / (r.width / 2) * 4) + 'deg) rotateX(' + (-(y - r.height / 2) / (r.height / 2) * 4) + 'deg)';
+    // Unified 3D tilt-on-hover for cards (service cards, portfolio thumbs, collab cards)
+    if (!isTouch) {
+        document.querySelectorAll('.tilt').forEach(function(card) {
+            var strength = parseFloat(card.getAttribute('data-tilt')) || 6;
+            card.addEventListener('mousemove', function(e) {
+                var r = card.getBoundingClientRect();
+                var x = e.clientX - r.left;
+                var y = e.clientY - r.top;
+                var rx = -(y - r.height / 2) / (r.height / 2) * strength;
+                var ry = (x - r.width / 2) / (r.width / 2) * strength;
+                card.style.transform = 'perspective(700px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-4px) translateZ(10px)';
+            });
+            card.addEventListener('mouseleave', function() {
+                card.style.transform = '';
+            });
         });
-        card.addEventListener('mouseleave', function() { card.style.transform = ''; });
-    });
+    }
 
-    // bg canvas animation
+    // Custom cursor (desktop only)
+    var cursorDot = document.getElementById('cursorDot');
+    var cursorRing = document.getElementById('cursorRing');
+    if (!isTouch && cursorDot && cursorRing) {
+        document.body.classList.add('has-custom-cursor');
+        var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+        var rx = cx, ry = cy;
+        window.addEventListener('mousemove', function(e) {
+            cx = e.clientX;
+            cy = e.clientY;
+            cursorDot.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
+        });
+        (function ringLoop() {
+            rx += (cx - rx) * 0.18;
+            ry += (cy - ry) * 0.18;
+            cursorRing.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+            requestAnimationFrame(ringLoop);
+        })();
+        var interactive = 'a, button, .tilt, .cube3d, input, textarea';
+        document.addEventListener('mouseover', function(e) {
+            if (e.target.closest(interactive)) document.body.classList.add('cursor-hover');
+        });
+        document.addEventListener('mouseout', function(e) {
+            if (e.target.closest(interactive)) document.body.classList.remove('cursor-hover');
+        });
+        document.addEventListener('mousedown', function() { document.body.classList.add('cursor-active'); });
+        document.addEventListener('mouseup', function() { document.body.classList.remove('cursor-active'); });
+        document.addEventListener('mouseleave', function() { document.body.classList.add('cursor-hidden'); });
+        document.addEventListener('mouseenter', function() { document.body.classList.remove('cursor-hidden'); });
+    }
+
+    // bg canvas animation (ambient particle field, monochrome)
     var c = document.getElementById('bgCanvas');
     var ctx = c.getContext('2d');
     var dots = [];
@@ -75,6 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     function anim() {
         ctx.clearRect(0, 0, W, H);
         for (var i = 0; i < dots.length; i++) {
@@ -95,9 +147,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if (d.y > H + 20) d.y = -20;
             for (var j = i + 1; j < dots.length; j++) {
                 var d2 = dots[j];
-                var cx = d.x - d2.x;
-                var cy = d.y - d2.y;
-                var cd = Math.sqrt(cx * cx + cy * cy);
+                var cx2 = d.x - d2.x;
+                var cy2 = d.y - d2.y;
+                var cd = Math.sqrt(cx2 * cx2 + cy2 * cy2);
                 if (cd < 140) {
                     var alpha = (1 - cd / 140) * 0.25;
                     ctx.beginPath();
@@ -120,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.fillStyle = 'rgba(0,0,0,' + (d.o + 0.1) + ')';
             ctx.fill();
         }
-        requestAnimationFrame(anim);
+        if (!reducedMotion) requestAnimationFrame(anim);
     }
     anim();
 });
