@@ -4,34 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mezz — Monteur Video</title>
-    <meta name="description" content="Mezz — Monteur vidéo. Montage court, packaging et direction créative pour créateurs et marques.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>M</text></svg>">
 </head>
 <body style="position:relative">
-
-<div class="progress-bar" id="progressBar"></div>
-<div class="grain"></div>
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
 <canvas id="bgCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0"></canvas>
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">
-                <span class="logo-cube" aria-hidden="true">
-                    <span class="cube-face f1"></span>
-                    <span class="cube-face f2"></span>
-                    <span class="cube-face f3"></span>
-                    <span class="cube-face f4"></span>
-                    <span class="cube-face f5"></span>
-                    <span class="cube-face f6"></span>
-                </span>
-                mezz
-            </a>
+            <a href="#" class="logo">mezz</a>
             <div class="nav-links">
                 <a href="#services">Services</a>
                 <a href="#about">À propos</a>
@@ -44,23 +27,20 @@
     </nav>
 
     <section class="hero" id="top">
-        <div class="hero-grid">
-            <div class="hero-inner">
-                <p class="hero-label">MONTEUR VIDEO</p>
-                <h1 class="hero-title">
-                    mezz
-                </h1>
-                <p class="hero-status">Disponible pour mission</p>
-                <p class="hero-sub">Montage percutant. Image maîtrisée.</p>
-                <p class="hero-desc">
-                    Je transforme des idées brutes en montages courts et nets, intenses et mémorables.
-                </p>
-                <div class="hero-btns">
-                    <a href="#portfolio" class="btn btn-primary">Voir la sélection</a>
-                    <a href="#contact" class="btn btn-outline">Me contacter</a>
-                </div>
+        <div class="hero-inner">
+            <p class="hero-label">MONTEUR VIDEO</p>
+            <h1 class="hero-title">
+                mezz
+            </h1>
+            <p style="font-size:.7rem;color:#22a67e;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;font-weight:600">&#9679; Disponible pour mission</p>
+            <p class="hero-sub">Montage percutant. Image maîtrisée.</p>
+            <p class="hero-desc">
+                Je transforme des idées brutes en montages courts et nets, intenses et mémorables.
+            </p>
+            <div class="hero-btns">
+                <a href="#portfolio" class="btn btn-primary">Voir la sélection</a>
+                <a href="#contact" class="btn btn-outline">Me contacter</a>
             </div>
-            <canvas id="heroWire" class="hero-wire" aria-hidden="true"></canvas>
         </div>
         <div class="hero-scroll">SCROLL</div>
     </section>
@@ -72,41 +52,17 @@
                 <h2>Formats <span class="outline">maîtrisés</span></h2>
             </div>
             <div class="services-grid">
-                <div class="service-card tilt reveal" style="transition-delay:0.1s">
-                    <span class="cube3d" aria-hidden="true">
-                        <span class="cube-face f1"></span>
-                        <span class="cube-face f2"></span>
-                        <span class="cube-face f3"></span>
-                        <span class="cube-face f4"></span>
-                        <span class="cube-face f5"></span>
-                        <span class="cube-face f6"></span>
-                    </span>
+                <div class="service-card reveal" style="transition-delay:0.1s">
                     <span class="service-number">01</span>
                     <h3>Montage court</h3>
                     <p>Coupe précise, tempo fort et structure pensée pour retenir l'attention dès les premières secondes.</p>
                 </div>
-                <div class="service-card tilt reveal" style="transition-delay:0.2s">
-                    <span class="cube3d" aria-hidden="true">
-                        <span class="cube-face f1"></span>
-                        <span class="cube-face f2"></span>
-                        <span class="cube-face f3"></span>
-                        <span class="cube-face f4"></span>
-                        <span class="cube-face f5"></span>
-                        <span class="cube-face f6"></span>
-                    </span>
+                <div class="service-card reveal" style="transition-delay:0.2s">
                     <span class="service-number">02</span>
                     <h3>Packaging video</h3>
                     <p>Habillage, transitions, sous-titres, sound design et finition visuelle cohérente.</p>
                 </div>
-                <div class="service-card tilt reveal" style="transition-delay:0.3s">
-                    <span class="cube3d" aria-hidden="true">
-                        <span class="cube-face f1"></span>
-                        <span class="cube-face f2"></span>
-                        <span class="cube-face f3"></span>
-                        <span class="cube-face f4"></span>
-                        <span class="cube-face f5"></span>
-                        <span class="cube-face f6"></span>
-                    </span>
+                <div class="service-card reveal" style="transition-delay:0.3s">
                     <span class="service-number">03</span>
                     <h3>Direction creative</h3>
                     <p>Une présentation premium pour donner à la chaîne, au reel ou au projet une vraie présence.</p>
@@ -115,8 +71,7 @@
         </div>
     </section>
 
-    <section id="about" class="about-section">
-        <canvas id="aboutWire" class="deco-wire" aria-hidden="true"></canvas>
+    <section id="about" style="padding:80px 0;background:var(--white)">
         <div class="container">
             <div class="section-header reveal">
                 <p class="section-label">À propos</p>
@@ -152,37 +107,37 @@
                 <h2>Montages <span class="outline">réalisés</span></h2>
             </div>
             <div class="portfolio-grid">
-                <div class="portfolio-item reveal-scale tilt" style="transition-delay:0.05s">
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.05s">
                     <div class="portfolio-thumb">
                         <img src="https://img.youtube.com/vi/-_bcmHst_Yc/hqdefault.jpg" alt="Video" loading="lazy">
                         <a href="https://youtu.be/-_bcmHst_Yc" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
                     </div>
                 </div>
-                <div class="portfolio-item reveal-scale tilt" style="transition-delay:0.1s">
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.1s">
                     <div class="portfolio-thumb">
                         <img src="https://img.youtube.com/vi/fMvX_PeXom4/hqdefault.jpg" alt="Video" loading="lazy">
                         <a href="https://youtu.be/fMvX_PeXom4" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
                     </div>
                 </div>
-                <div class="portfolio-item reveal-scale tilt" style="transition-delay:0.15s">
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.15s">
                     <div class="portfolio-thumb">
                         <img src="https://img.youtube.com/vi/qulAzY_eMTE/hqdefault.jpg" alt="Video" loading="lazy">
                         <a href="https://youtu.be/qulAzY_eMTE" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
                     </div>
                 </div>
-                <div class="portfolio-item reveal-scale tilt" style="transition-delay:0.2s">
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.2s">
                     <div class="portfolio-thumb">
                         <img src="https://img.youtube.com/vi/sFIP1reqB_4/hqdefault.jpg" alt="Video" loading="lazy">
                         <a href="https://youtu.be/sFIP1reqB_4" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
                     </div>
                 </div>
-                <div class="portfolio-item reveal-scale tilt" style="transition-delay:0.25s">
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.25s">
                     <div class="portfolio-thumb">
                         <img src="https://img.youtube.com/vi/AfmDTQgVIVk/hqdefault.jpg" alt="Video" loading="lazy">
                         <a href="https://youtu.be/AfmDTQgVIVk" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
                     </div>
                 </div>
-                <div class="portfolio-item reveal-scale tilt" style="transition-delay:0.3s">
+                <div class="portfolio-item reveal-scale" style="transition-delay:0.3s">
                     <div class="portfolio-thumb">
                         <img src="https://img.youtube.com/vi/cbgoe5sceXk/hqdefault.jpg" alt="Video" loading="lazy">
                         <a href="https://youtu.be/cbgoe5sceXk" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
@@ -203,7 +158,7 @@
                 <h2>Ils m'ont <span class="outline">fait confiance</span></h2>
             </div>
             <div class="collab-grid">
-                <a href="https://www.youtube.com/@cubi-game6913" target="_blank" rel="noopener" class="collab-card reveal-left tilt" style="transition-delay:0.1s">
+                <a href="https://www.youtube.com/@cubi-game6913" target="_blank" rel="noopener" class="collab-card reveal-left" style="transition-delay:0.1s">
                     <div class="collab-avatar">
                         <img src="https://yt3.googleusercontent.com/einN5wa9bMaQ_-cna0F8ZrExNG9nvBKZnCZCObLQHOOsYnmsMiZt9l8G0inbGP9t2uxmLR9JcA=s160-c-k-c0x00ffffff-no-rj" alt="Cubi Game" loading="lazy">
                     </div>
@@ -212,7 +167,7 @@
                         <span>Influenceur</span>
                     </div>
                 </a>
-                <a href="https://www.youtube.com/@StickOnThePlace" target="_blank" rel="noopener" class="collab-card reveal-right tilt" style="transition-delay:0.2s">
+                <a href="https://www.youtube.com/@StickOnThePlace" target="_blank" rel="noopener" class="collab-card reveal-right" style="transition-delay:0.2s">
                     <div class="collab-avatar">
                         <img src="https://yt3.googleusercontent.com/R5N_tGfLAab49iqHK6BfvVW_jr8749gIKCWH1dE57E0e2FIbyk6wTtMCtfRrAYEPzsTEFayQ=s160-c-k-c0x00ffffff-no-rj" alt="Stick On The Place" loading="lazy">
                     </div>
@@ -226,7 +181,6 @@
     </section>
 
     <section id="contact" class="contact">
-        <canvas id="contactWire" class="deco-wire" aria-hidden="true"></canvas>
         <div class="container">
             <div class="contact-content reveal">
                 <p class="section-label">Contact</p>
@@ -252,7 +206,6 @@
     </footer>
 
     <script src="js/tracker.js"></script>
-    <script src="js/wireframe.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
