@@ -1,0 +1,44 @@
+/* Custom Cursor & Trail */
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+}
+
+.custom-cursor-follower {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+#cursor-trail-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 99997;
+}
+
+body.cursor-hover .custom-cursor-follower {
+    transform: translate(-50%, -50%) scale(1.8);
+    background: rgba(99, 102, 241, 0.2);
+    border-color: var(--primary-color);
+}
