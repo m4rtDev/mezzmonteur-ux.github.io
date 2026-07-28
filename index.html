@@ -1,218 +1,468 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- ============================================================
+         ENCODAGE & RESPONSIVE
+    ============================================================= -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- SEO & Meta Tags -->
-    <title>Mezz | Développeur</title>
-    <meta name="description" content="Portfolio de xmezzedv, Développeur Front-End Senior. Création d'expériences web immersives, 3D et ultra-optimisées.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <!-- ============================================================
+         SEO — Titre, description, indexation
+    ============================================================= -->
+    <title>Mezz — Développeur Front-End</title>
+    <meta name="description" content="Portfolio de Mezz, développeur Front-End créatif spécialisé en expériences web immersives, animations premium et univers 3D interactifs (Three.js, GSAP, WebGL).">
+    <meta name="keywords" content="Mezz, développeur front-end, portfolio, Three.js, GSAP, WebGL, design web, animation, expérience immersive">
+    <meta name="author" content="Mezz">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://mezzmonteur.com/">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="xmezzedv | Développeur Front-End Premium">
-    <meta property="og:description" content="Création d'expériences web immersives et ultra-optimisées.">
+    <link rel="canonical" href="https://mezz.dev/">
+
+    <!-- ============================================================
+         OPEN GRAPH (partage Facebook / LinkedIn / etc.)
+    ============================================================= -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mezzmonteur.com/">
-    
-    <!-- Twitter Cards -->
+    <meta property="og:url" content="https://mezz.dev/">
+    <meta property="og:title" content="Mezz — Développeur Front-End Créatif">
+    <meta property="og:description" content="Expériences web immersives, animations premium et univers 3D interactifs.">
+    <meta property="og:image" content="assets/images/og-image.jpg">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- ============================================================
+         TWITTER CARDS
+    ============================================================= -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="xmezzedv | Développeur Front-End Premium">
-    <meta name="twitter:description" content="Création d'expériences web immersives et ultra-optimisées.">
-    
-    <!-- Favicon (à ajouter plus tard dans le dossier assets) -->
-    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
-    
-    <!-- Fonts -->
+    <meta name="twitter:title" content="Mezz — Développeur Front-End Créatif">
+    <meta name="twitter:description" content="Expériences web immersives, animations premium et univers 3D interactifs.">
+    <meta name="twitter:image" content="assets/images/og-image.jpg">
+
+    <!-- ============================================================
+         FAVICONS (ajoute tes propres fichiers dans assets/icons/)
+    ============================================================= -->
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <meta name="theme-color" content="#000000">
+
+    <!-- ============================================================
+         PERFORMANCE — Préconnexions aux domaines externes
+    ============================================================= -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- CSS -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://unpkg.com">
+
+    <!-- ============================================================
+         POLICES — Space Grotesk (titres) + Inter (texte courant)
+    ============================================================= -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ============================================================
+         FONT AWESOME — Icônes
+    ============================================================= -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- ============================================================
+         FEUILLE DE STYLE PRINCIPALE
+    ============================================================= -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- ============================================================
+         DONNÉES STRUCTURÉES (SEO avancé — Schema.org)
+    ============================================================= -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mezz",
+      "jobTitle": "Développeur Front-End Créatif",
+      "url": "https://mezz.dev/",
+      "email": "mailto:m3rt0@proton.me"
+    }
+    </script>
 </head>
-<body>
-    <!-- Curseur Personnalisé -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
+<body class="is-loading">
 
-    <!-- Canvas Three.js -->
-    <canvas id="webgl-canvas"></canvas>
+    <!-- ============================================================
+         LIEN D'ACCÈS RAPIDE (accessibilité clavier)
+    ============================================================= -->
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
-    <!-- Contenu Principal -->
-    <main id="smooth-wrapper">
-        <div id="smooth-content">
-            
-            <!-- Hero Section -->
-            <section id="hero" class="section">
-                <div class="hero-content text-center">
-                    <h1 class="glitch-text" data-text="DÉVELOPPEUR">DÉVELOPPEUR<br><span class="outline-text">FRONT-END</span></h1>
-                    <p class="subtitle gsap-fade-up">Création d'expériences digitales immersives, ultra-rapides et cinématiques.</p>
-                    <a href="#portfolio" class="btn magnetic gsap-fade-up mt-4">Découvrir mes travaux</a>
-                </div>
-            </section>
+    <!-- ============================================================
+         GRAIN / BRUIT CINÉMATOGRAPHIQUE (effet pellicule)
+    ============================================================= -->
+    <div class="noise-overlay" aria-hidden="true"></div>
 
-            <!-- À Propos -->
-            <section id="about" class="section">
-                <div class="container">
-                    <div class="glass-panel gsap-reveal">
-                        <h2 class="section-title">À Propos</h2>
-                        <p class="text-large">Je suis un développeur passionné par l'intersection entre le design et la technologie. Mon objectif : repousser les limites du web avec des animations fluides, des univers 3D et des interfaces minimalistes.</p>
-                    </div>
-                </div>
-            </section>
+    <!-- ============================================================
+         VIGNETTE (assombrit les bords pour la profondeur)
+    ============================================================= -->
+    <div class="vignette-overlay" aria-hidden="true"></div>
 
-            <!-- Services -->
-            <section id="services" class="section">
-                <div class="container">
-                    <h2 class="section-title text-center mb-4 gsap-reveal">Expertise</h2>
-                    <div class="grid-3">
-                        <div class="glass-card magnetic gsap-reveal">
-                            <i class="fa-solid fa-code icon-large"></i>
-                            <h3>Développement Web</h3>
-                            <p>Des sites sur-mesure, performants et évolutifs, codés avec les dernières technologies.</p>
-                        </div>
-                        <div class="glass-card magnetic gsap-reveal">
-                            <i class="fa-solid fa-cube icon-large"></i>
-                            <h3>Expériences 3D</h3>
-                            <p>Intégration de scènes WebGL et Three.js pour des univers immersifs inoubliables.</p>
-                        </div>
-                        <div class="glass-card magnetic gsap-reveal">
-                            <i class="fa-solid fa-wand-magic-sparkles icon-large"></i>
-                            <h3>UI/UX Design</h3>
-                            <p>Interfaces minimalistes, élégantes et pensées pour une expérience utilisateur parfaite.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <!-- ============================================================
+         BARRE DE PROGRESSION DE SCROLL
+    ============================================================= -->
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
-            <!-- Portfolio -->
-            <section id="portfolio" class="section">
-                <div class="container">
-                    <h2 class="section-title mb-4 gsap-reveal">Travaux Récents</h2>
-                    <div class="portfolio-grid">
-                        <div class="portfolio-item glass-card gsap-reveal magnetic-hover">
-                            <div class="portfolio-img" style="background-color: #111;"></div>
-                            <div class="portfolio-info">
-                                <h3>Édition Limitée</h3>
-                                <p>Site e-commerce premium avec essayage 3D en temps réel.</p>
-                            </div>
-                        </div>
-                        <div class="portfolio-item glass-card gsap-reveal magnetic-hover">
-                            <div class="portfolio-img" style="background-color: #151515;"></div>
-                            <div class="portfolio-info">
-                                <h3>Studio Architecture</h3>
-                                <p>Portfolio immersif avec visites virtuelles et transitions cinématiques.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <!-- ============================================================
+         CURSEUR PERSONNALISÉ (désactivé automatiquement sur mobile via JS/CSS)
+    ============================================================= -->
+    <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-outline" id="cursor-outline" aria-hidden="true"></div>
 
-            <!-- Compétences -->
-            <section id="skills" class="section">
-                <div class="container">
-                    <h2 class="section-title text-center mb-4 gsap-reveal">Skill</h2>
-                    <div class="skills-flex">
-                        <span class="skill-tag gsap-reveal">HTML5</span>
-                        <span class="skill-tag gsap-reveal">CSS3</span>
-                        <span class="skill-tag gsap-reveal">JavaScript ES6</span>
-                        <span class="skill-tag gsap-reveal">Three.js</span>
-                        <span class="skill-tag gsap-reveal">WebGL</span>
-                        <span class="skill-tag gsap-reveal">GSAP</span>
-                        <span class="skill-tag gsap-reveal">Lenis</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Processus -->
-            <section id="process" class="section">
-                <div class="container">
-                    <h2 class="section-title mb-4 gsap-reveal">Processus</h2>
-                    <div class="process-timeline">
-                        <div class="process-step gsap-reveal">
-                            <div class="step-number">01</div>
-                            <h3>Stratégie & Design</h3>
-                            <p>Analyse de vos besoins et conception d'une interface minimaliste et impactante.</p>
-                        </div>
-                        <div class="process-step gsap-reveal">
-                            <div class="step-number">02</div>
-                            <h3>Développement</h3>
-                            <p>Écriture d'un code propre, intégration de la scène Three.js et des animations GSAP.</p>
-                        </div>
-                        <div class="process-step gsap-reveal">
-                            <div class="step-number">03</div>
-                            <h3>Optimisation & Lancement</h3>
-                            <p>Tests de performance (60 FPS), responsive design et déploiement final.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- FAQ -->
-            <section id="faq" class="section">
-                <div class="container">
-                    <div class="glass-panel gsap-reveal">
-                        <h2 class="section-title mb-4">Questions Fréquentes</h2>
-                        <div class="faq-item">
-                            <h4>Quels sont vos tarifs ?</h4>
-                            <p class="pricing-notice">Les tarifs sont communiqués uniquement en privé.</p>
-                        </div>
-                        <div class="faq-item">
-                            <h4>Travaillez-vous à distance ?</h4>
-                            <p>Oui, je collabore avec des clients du monde entier avec une communication fluide.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Contact -->
-            <section id="contact" class="section">
-                <div class="container text-center">
-                    <h2 class="section-title mb-4 gsap-reveal">Démarrons un projet</h2>
-                    
-                    <div class="contact-cards">
-                        <!-- Carte Discord -->
-                        <div class="discord-card glass-card magnetic gsap-reveal" id="discord-btn">
-                            <i class="fa-brands fa-discord"></i>
-                            <div class="discord-info">
-                                <span class="discord-label">Discord</span>
-                                <span class="discord-id">xmezzedv</span>
-                            </div>
-                            <span class="copy-status">Copier</span>
-                        </div>
-
-                        <!-- Bouton Email -->
-                        <a href="mailto:m3rt0@proton.me?subject=Demande%20de%20devis&body=Bonjour%2C%0A%0AJe%20souhaite%20discuter%20de%20mon%20projet.%0A%0AMerci." class="email-btn btn magnetic gsap-reveal">
-                            <i class="fa-solid fa-envelope"></i> Envoyer un e-mail
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Footer -->
-            <footer class="footer">
-                <div class="container flex-between">
-                    <p>&copy; 2026 mezzedv. Tous droits réservés.</p>
-                    <p class="pricing-notice-small">Les tarifs sont communiqués uniquement en privé.</p>
-                </div>
-            </footer>
-
+    <!-- ============================================================
+         PRÉCHARGEUR (loader d'entrée)
+    ============================================================= -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <span class="preloader-logo">MEZZ</span>
+            <div class="preloader-bar">
+                <div class="preloader-bar-fill" id="preloader-bar-fill"></div>
+            </div>
+            <span class="preloader-counter" id="preloader-counter">000</span>
         </div>
+    </div>
+
+    <!-- ============================================================
+         CANVAS THREE.JS — Univers 3D en arrière-plan fixe
+    ============================================================= -->
+    <canvas id="webgl-canvas" aria-hidden="true"></canvas>
+
+    <!-- ============================================================
+         EN-TÊTE / NAVIGATION
+    ============================================================= -->
+    <header class="site-header" id="site-header">
+        <nav class="navbar" aria-label="Navigation principale">
+            <a href="#home" class="navbar-logo" data-cursor="hover" aria-label="Retour à l'accueil">MEZZ<span class="dot">.</span></a>
+
+            <ul class="navbar-links" id="navbar-links">
+                <li><a href="#home" data-cursor="hover">Accueil</a></li>
+                <li><a href="#about" data-cursor="hover">À propos</a></li>
+                <li><a href="#skills" data-cursor="hover">Compétences</a></li>
+                <li><a href="#services" data-cursor="hover">Services</a></li>
+                <li><a href="#contact" data-cursor="hover">Contact</a></li>
+            </ul>
+
+            <a href="#contact" class="btn btn-outline navbar-cta magnetic" data-cursor="hover">
+                <span>Me contacter</span>
+            </a>
+
+            <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+
+        <!-- Menu mobile plein écran -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul class="mobile-menu-links">
+                <li><a href="#home" class="mobile-link">Accueil</a></li>
+                <li><a href="#about" class="mobile-link">À propos</a></li>
+                <li><a href="#skills" class="mobile-link">Compétences</a></li>
+                <li><a href="#services" class="mobile-link">Services</a></li>
+                <li><a href="#contact" class="mobile-link">Contact</a></li>
+            </ul>
+            <p class="mobile-menu-email">m3rt0@proton.me</p>
+        </div>
+    </header>
+
+    <!-- ============================================================
+         CONTENU PRINCIPAL
+    ============================================================= -->
+    <main id="main-content">
+
+        <!-- ========================================================
+             SECTION HERO
+        ========================================================= -->
+        <section class="section hero" id="home">
+            <div class="hero-inner">
+                <span class="eyebrow reveal" data-reveal>Portfolio — 2025</span>
+
+                <h1 class="hero-title" id="hero-title" aria-label="Créateur d'expériences web immersives">
+                    <span class="hero-title-line">Créateur d'expériences</span>
+                    <span class="hero-title-line">web <em>immersives</em></span>
+                </h1>
+
+                <p class="hero-subtitle reveal" data-reveal>
+                    Je conçois des interfaces vivantes à la frontière du design et du code —
+                    animations sur-mesure, univers 3D et interactions qui marquent les esprits.
+                </p>
+
+                <div class="hero-actions reveal" data-reveal>
+                    <a href="#contact" class="btn btn-primary magnetic" data-cursor="hover">
+                        <span>Discutons de votre projet</span>
+                        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                    <a href="#about" class="btn btn-ghost magnetic" data-cursor="hover">
+                        <span>En savoir plus</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="scroll-indicator reveal" data-reveal aria-hidden="true">
+                <span class="scroll-indicator-text">Scroll</span>
+                <div class="scroll-indicator-line"><span></span></div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SECTION À PROPOS
+        ========================================================= -->
+        <section class="section about" id="about">
+            <div class="container about-grid">
+
+                <!-- Visuel abstrait (pas d'image requise) -->
+                <div class="about-visual reveal" data-reveal>
+                    <div class="about-frame tilt-card">
+                        <span class="about-frame-letter">M</span>
+                        <div class="about-frame-ring ring-1"></div>
+                        <div class="about-frame-ring ring-2"></div>
+                        <div class="about-frame-grid"></div>
+                    </div>
+                </div>
+
+                <!-- Texte -->
+                <div class="about-content">
+                    <span class="eyebrow reveal" data-reveal>À propos</span>
+                    <h2 class="section-title reveal" data-reveal>
+                        Une approche obsédée par le détail.
+                    </h2>
+                    <p class="about-text reveal" data-reveal>
+                        Je suis Mezz, développeur Front-End passionné par les interfaces qui racontent
+                        une histoire. Mon travail se situe à la croisée du design, du code et du mouvement :
+                        chaque pixel, chaque transition, chaque courbe d'animation est pensée pour créer
+                        une émotion.
+                    </p>
+                    <p class="about-text reveal" data-reveal>
+                        Curieux et rigoureux, j'explore sans relâche les nouvelles technologies web —
+                        WebGL, shaders, animation avancée — pour repousser ce qu'un navigateur peut offrir
+                        en matière d'expérience utilisateur.
+                    </p>
+
+                    <ul class="about-values" data-reveal-group>
+                        <li class="about-value reveal" data-reveal>
+                            <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
+                            <div>
+                                <h3>Précision</h3>
+                                <p>Un pixel n'est jamais laissé au hasard.</p>
+                            </div>
+                        </li>
+                        <li class="about-value reveal" data-reveal>
+                            <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+                            <div>
+                                <h3>Créativité</h3>
+                                <p>Chaque projet mérite sa propre identité visuelle.</p>
+                            </div>
+                        </li>
+                        <li class="about-value reveal" data-reveal>
+                            <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
+                            <div>
+                                <h3>Performance</h3>
+                                <p>Le beau ne doit jamais sacrifier la vitesse.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SECTION COMPÉTENCES
+        ========================================================= -->
+        <section class="section skills" id="skills">
+            <div class="container">
+                <div class="section-header">
+                    <span class="eyebrow reveal" data-reveal>Compétences</span>
+                    <h2 class="section-title reveal" data-reveal>Mon arsenal technique.</h2>
+                    <p class="section-desc reveal" data-reveal>
+                        Un ensemble d'outils modernes maîtrisés pour donner vie à des interfaces
+                        performantes et spectaculaires.
+                    </p>
+                </div>
+
+                <div class="skills-grid">
+                    <!-- Chaque carte possède un attribut data-level pour l'animation de la barre -->
+                    <div class="skill-card tilt-card reveal" data-reveal data-level="95">
+                        <i class="fa-brands fa-html5" aria-hidden="true"></i>
+                        <h3>HTML5</h3>
+                        <p>Structure sémantique, accessible et optimisée pour le SEO.</p>
+                        <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                    </div>
+
+                    <div class="skill-card tilt-card reveal" data-reveal data-level="92">
+                        <i class="fa-brands fa-css3-alt" aria-hidden="true"></i>
+                        <h3>CSS3 Avancé</h3>
+                        <p>Animations, Grid, Flexbox, variables et effets visuels premium.</p>
+                        <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                    </div>
+
+                    <div class="skill-card tilt-card reveal" data-reveal data-level="90">
+                        <i class="fa-brands fa-js" aria-hidden="true"></i>
+                        <h3>JavaScript ES2025</h3>
+                        <p>Code moderne, modulaire et orienté performance.</p>
+                        <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                    </div>
+
+                    <div class="skill-card tilt-card reveal" data-reveal data-level="85">
+                        <i class="fa-solid fa-cube" aria-hidden="true"></i>
+                        <h3>Three.js &amp; WebGL</h3>
+                        <p>Univers 3D interactifs, particules et post-processing.</p>
+                        <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                    </div>
+
+                    <div class="skill-card tilt-card reveal" data-reveal data-level="90">
+                        <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+                        <h3>GSAP &amp; Motion</h3>
+                        <p>Animations cinématiques et transitions fluides au scroll.</p>
+                        <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                    </div>
+
+                    <div class="skill-card tilt-card reveal" data-reveal data-level="75">
+                        <i class="fa-solid fa-shapes" aria-hidden="true"></i>
+                        <h3>GLSL / Shaders</h3>
+                        <p>Programmation graphique bas niveau pour des effets uniques.</p>
+                        <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                    </div>
+
+                    <div class="skill-card tilt-card reveal" data-reveal data-level="93">
+                        <i class="fa-solid fa-mobile-screen" aria-hidden="true"></i>
+                        <h3>Responsive Design</h3>
+                        <p>Une expérience parfaite sur tous les écrans, sans exception.</p>
+                        <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                    </div>
+
+                    <div class="skill-card tilt-card reveal" data-reveal data-level="88">
+                        <i class="fa-solid fa-pen-ruler" aria-hidden="true"></i>
+                        <h3>UI / UX Design</h3>
+                        <p>Des interfaces intuitives pensées pour l'utilisateur.</p>
+                        <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                    </div>
+
+                    <div class="skill-card tilt-card reveal" data-reveal data-level="87">
+                        <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+                        <h3>Optimisation</h3>
+                        <p>Chargement rapide, 60 FPS et bonnes pratiques web.</p>
+                        <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                    </div>
+
+                    <div class="skill-card tilt-card reveal" data-reveal data-level="90">
+                        <i class="fa-brands fa-git-alt" aria-hidden="true"></i>
+                        <h3>Git &amp; Versioning</h3>
+                        <p>Un code propre, versionné et facile à maintenir.</p>
+                        <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SECTION SERVICES
+        ========================================================= -->
+        <section class="section services" id="services">
+            <div class="container">
+                <div class="section-header">
+                    <span class="eyebrow reveal" data-reveal>Services</span>
+                    <h2 class="section-title reveal" data-reveal>Ce que je peux créer pour vous.</h2>
+                    <p class="section-desc reveal" data-reveal>
+                        De la simple vitrine à l'expérience 3D immersive, chaque projet est traité
+                        avec la même exigence.
+                    </p>
+                </div>
+
+                <div class="services-grid">
+                    <div class="service-card tilt-card reveal" data-reveal>
+                        <div class="service-icon"><i class="fa-solid fa-code" aria-hidden="true"></i></div>
+                        <h3>Développement Front-End</h3>
+                        <p>Sites vitrines et interfaces sur-mesure, codés à la main pour une performance et une flexibilité maximales.</p>
+                    </div>
+
+                    <div class="service-card tilt-card reveal" data-reveal>
+                        <div class="service-icon"><i class="fa-solid fa-cube" aria-hidden="true"></i></div>
+                        <h3>Expériences 3D Interactives</h3>
+                        <p>Univers WebGL immersifs avec Three.js : particules, tunnels, objets flottants et caméra dynamique.</p>
+                    </div>
+
+                    <div class="service-card tilt-card reveal" data-reveal>
+                        <div class="service-icon"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></div>
+                        <h3>Animation &amp; Motion Design</h3>
+                        <p>Transitions cinématiques, révélations au scroll et micro-interactions premium avec GSAP.</p>
+                    </div>
+
+                    <div class="service-card tilt-card reveal" data-reveal>
+                        <div class="service-icon"><i class="fa-solid fa-gauge-high" aria-hidden="true"></i></div>
+                        <h3>Optimisation &amp; Performance</h3>
+                        <p>Audit et amélioration de la vitesse de chargement, du SEO et de la fluidité (60 FPS).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+             SECTION CONTACT
+        ========================================================= -->
+        <section class="section contact" id="contact">
+            <div class="container contact-container">
+                <span class="eyebrow reveal" data-reveal>Contact</span>
+                <h2 class="section-title reveal" data-reveal>Parlons de votre prochain projet.</h2>
+                <p class="section-desc reveal" data-reveal>
+                    Une idée en tête ? Une question ? Mon adresse mail est toujours ouverte.
+                </p>
+
+                <div class="contact-card tilt-card reveal" data-reveal>
+                    <div class="contact-card-glow" aria-hidden="true"></div>
+                    <i class="fa-solid fa-envelope contact-icon" aria-hidden="true"></i>
+                    <p class="contact-email" id="contact-email">m3rt0@proton.me</p>
+                    <button class="btn btn-primary copy-btn magnetic" id="copy-email-btn" data-cursor="hover" aria-label="Copier l'adresse e-mail">
+                        <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                        <span>Copier l'adresse</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <!-- Scripts Externes -->
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <!-- Lenis (Smooth Scroll) -->
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
-    
-    <!-- Script Principal -->
-    <script src="js/script.js"></script>
+    <!-- ============================================================
+         PIED DE PAGE
+    ============================================================= -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <a href="#home" class="navbar-logo" data-cursor="hover">MEZZ<span class="dot">.</span></a>
+            <p class="footer-text">Développeur Front-End Créatif — Conçu &amp; codé avec passion.</p>
+            <p class="footer-copyright">© <span id="current-year"></span> Mezz. Tous droits réservés.</p>
+        </div>
+
+        <button class="back-to-top magnetic" id="back-to-top" aria-label="Retour en haut de page" data-cursor="hover">
+            <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+        </button>
+    </footer>
+
+    <!-- ============================================================
+         TOAST — Confirmation de copie
+    ============================================================= -->
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+        <span>Adresse copiée !</span>
+    </div>
+
+    <!-- ============================================================
+         IMPORT MAP — Résolution des modules Three.js
+    ============================================================= -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- ============================================================
+         BIBLIOTHÈQUES EXTERNES (GSAP / ScrollTrigger / Lenis)
+    ============================================================= -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+    <!-- ============================================================
+         SCRIPT PRINCIPAL (module ES)
+    ============================================================= -->
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>
