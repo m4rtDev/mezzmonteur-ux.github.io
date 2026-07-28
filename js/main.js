@@ -1,11 +1,11 @@
 /* ==========================================================================
-   MEZZ PORTFOLIO — ENGINE 3D, THREE.JS, GSAP, LENIS & INTERACTION
+   MEZZ PORTFOLIO — SCÈNE 3D MONOCHROME, GSAP, LENIS SCROLL & INTERACTION
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
     // ==========================================================================
-    // 1. SMOOTH SCROLLING (LENIS)
+    // 1. LENIS SMOOTH SCROLLING
     // ==========================================================================
     const lenis = new Lenis({
         duration: 1.2,
@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     requestAnimationFrame(raf);
 
-    // Intégration Lenis + GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => {
         lenis.raf(time * 1000);
@@ -29,19 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.ticker.lagSmoothing(0, 0);
 
     // ==========================================================================
-    // 2. SCÈNE THREE.JS 3D UNIVERSE
+    // 2. SCÈNE 3D THREE.JS (MONOCHROME UNIVERSE)
     // ==========================================================================
     const canvas = document.getElementById('webgl-canvas');
     const scene = new THREE.Scene();
     
-    // Ajout d'un brouillard d'ambiance
-    scene.fog = new THREE.FogExp2(0x070709, 0.015);
+    // Brouillard profond
+    scene.fog = new THREE.FogExp2(0x050505, 0.018);
 
-    // Caméra dynamique
+    // Caméra 3D
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 15;
 
-    // Renderer haute performance GPU
+    // Renderer WebGL GPU
     const renderer = new THREE.WebGLRenderer({
         canvas: canvas,
         alpha: true,
@@ -51,131 +50,130 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // --- OBJETS 3D EN ARRIÈRE-PLAN ---
+    // Groupe principal pour objets 3D
     const mainGroup = new THREE.Group();
     scene.add(mainGroup);
 
-    // Material Wireframe Néon Premium
+    // Matériau Wireframe Blanc / Argent
     const wireframeMaterial = new THREE.MeshStandardMaterial({
-        color: 0x00f2fe,
+        color: 0xffffff,
         wireframe: true,
         transparent: true,
-        opacity: 0.25,
-        roughness: 0.2,
-        metalness: 0.8
+        opacity: 0.2,
+        roughness: 0.1,
+        metalness: 0.9
     });
 
-    // Material Solid Glass
-    const glassMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0x4facfe,
-        metalness: 0.1,
-        roughness: 0.1,
-        transmission: 0.9,
-        opacity: 0.3,
-        transparent: true,
+    // Matériau Verre Sombre Métallique
+    const darkMetalMaterial = new THREE.MeshStandardMaterial({
+        color: 0x222222,
+        roughness: 0.2,
+        metalness: 0.8,
         wireframe: false
     });
 
-    // Geométries 3D Variées
-    const icoGeo = new THREE.IcosahedronGeometry(3.5, 1);
+    // --- FORMES GEOMÉTRIQUES 3D ---
+    // 1. Icosaèdre Wireframe (Haut Gauche)
+    const icoGeo = new THREE.IcosahedronGeometry(4, 1);
     const icoMesh = new THREE.Mesh(icoGeo, wireframeMaterial);
-    icoMesh.position.set(-6, 2, -2);
+    icoMesh.position.set(-7, 3, -2);
     mainGroup.add(icoMesh);
 
-    const cubeGeo = new THREE.BoxGeometry(3, 3, 3);
-    const cubeMesh = new THREE.Mesh(cubeGeo, glassMaterial);
+    // 2. Cube Métallique (Bas Droite)
+    const cubeGeo = new THREE.BoxGeometry(3.5, 3.5, 3.5);
+    const cubeMesh = new THREE.Mesh(cubeGeo, darkMetalMaterial);
     cubeMesh.position.set(7, -4, -4);
     mainGroup.add(cubeMesh);
 
-    const octaGeo = new THREE.OctahedronGeometry(2.5, 0);
+    // 3. Octaèdre Wireframe (Centre Milieu)
+    const octaGeo = new THREE.OctahedronGeometry(3, 0);
     const octaMesh = new THREE.Mesh(octaGeo, wireframeMaterial);
-    octaMesh.position.set(-5, -12, -1);
+    octaMesh.position.set(-6, -14, -1);
     mainGroup.add(octaMesh);
 
-    const torusGeo = new THREE.TorusGeometry(3, 0.8, 16, 100);
-    const torusMesh = new THREE.Mesh(torusGeo, glassMaterial);
-    torusMesh.position.set(6, -20, -3);
-    mainGroup.add(torusMesh);
+    // 4. TorusKnot (Bas)
+    const torusKnotGeo = new THREE.TorusKnotGeometry(2.5, 0.6, 100, 16);
+    const torusKnotMesh = new THREE.Mesh(torusKnotGeo, wireframeMaterial);
+    torusKnotMesh.position.set(6, -22, -3);
+    mainGroup.add(torusKnotMesh);
 
-    // --- ÉSYSTEME DE PARTICULES INTERACTIF ---
-    const particlesCount = 1200;
+    // --- CHAMP DE PARTICULES BLANCHES ---
+    const particlesCount = 1500;
     const posArray = new Float32Array(particlesCount * 3);
 
     for (let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 60;
+        posArray[i] = (Math.random() - 0.5) * 70;
     }
 
     const particlesGeo = new THREE.BufferGeometry();
     particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
     const particlesMat = new THREE.PointsMaterial({
-        size: 0.08,
-        color: 0x00f2fe,
+        size: 0.07,
+        color: 0xffffff,
         transparent: true,
-        opacity: 0.6,
+        opacity: 0.5,
         blending: THREE.AdditiveBlending
     });
 
     const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
     scene.add(particlesMesh);
 
-    // --- LUMIÈRES DYNAMIQUES ---
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    // --- LUMIÈRES NOIR & BLANC ---
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
-    const pointLight1 = new THREE.PointLight(0x00f2fe, 3, 30);
-    pointLight1.position.set(5, 5, 5);
-    scene.add(pointLight1);
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.5);
+    dirLight1.position.set(10, 10, 10);
+    scene.add(dirLight1);
 
-    const pointLight2 = new THREE.PointLight(0x4facfe, 2, 30);
-    pointLight2.position.set(-5, -5, 2);
-    scene.add(pointLight2);
+    const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
+    dirLight2.position.set(-10, -10, -5);
+    scene.add(dirLight2);
 
-    // --- PARALLAXE SOURIS 3D ---
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
+    // --- PARALLAXE SOURIS ---
+    let mouseX = 0, mouseY = 0;
+    let targetX = 0, targetY = 0;
 
     window.addEventListener('mousemove', (e) => {
         mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
         mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     });
 
-    // --- ANIMATION FRAME LOOP ---
+    // Loop Animation 3D
     const clock = new THREE.Clock();
 
     function animate3D() {
         const elapsedTime = clock.getElapsedTime();
 
-        // Rotation continue des objets
-        icoMesh.rotation.x = elapsedTime * 0.15;
-        icoMesh.rotation.y = elapsedTime * 0.2;
+        // Rotations des objets 3D
+        icoMesh.rotation.x = elapsedTime * 0.12;
+        icoMesh.rotation.y = elapsedTime * 0.18;
 
-        cubeMesh.rotation.x = elapsedTime * 0.2;
+        cubeMesh.rotation.x = elapsedTime * 0.15;
         cubeMesh.rotation.y = elapsedTime * 0.1;
 
         octaMesh.rotation.z = elapsedTime * 0.1;
-        octaMesh.rotation.y = elapsedTime * 0.25;
+        octaMesh.rotation.y = elapsedTime * 0.2;
 
-        torusMesh.rotation.x = elapsedTime * 0.3;
-        torusMesh.rotation.y = elapsedTime * 0.15;
+        torusKnotMesh.rotation.x = elapsedTime * 0.25;
+        torusKnotMesh.rotation.y = elapsedTime * 0.15;
 
-        particlesMesh.rotation.y = elapsedTime * 0.03;
+        particlesMesh.rotation.y = elapsedTime * 0.02;
 
-        // Smooth Mouse Parallax
+        // Effet de parallaxe
         targetX += (mouseX - targetX) * 0.05;
         targetY += (mouseY - targetY) * 0.05;
 
-        mainGroup.rotation.y = targetX * 0.2;
-        mainGroup.rotation.x = -targetY * 0.2;
+        mainGroup.rotation.y = targetX * 0.15;
+        mainGroup.rotation.x = -targetY * 0.15;
 
         renderer.render(scene, camera);
         requestAnimationFrame(animate3D);
     }
     animate3D();
 
-    // --- RESIZE RESPONSIF ---
+    // Resize dynamique
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -183,10 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     });
 
-    // --- CAMÉRA DYNAMIQUE LIÉE AU SCROLL (GSAP) ---
+    // Mouvement de la caméra 3D lors du Scroll
     gsap.to(camera.position, {
-        z: 25,
-        y: -18,
+        z: 22,
+        y: -20,
         ease: 'none',
         scrollTrigger: {
             trigger: 'body',
@@ -197,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================================================
-    // 3. ANIMATION DU PRELOADER
+    // 3. PRELOADER
     // ==========================================================================
     const preloader = document.getElementById('preloader');
     const loaderBar = document.getElementById('loaderBar');
@@ -205,17 +203,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let progress = 0;
     const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 8) + 2;
+        progress += Math.floor(Math.random() * 9) + 3;
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
 
-            // Intro cinématique
             gsap.to(preloader, {
                 opacity: 0,
-                duration: 1,
-                delay: 0.3,
-                ease: 'power4.inOut',
+                duration: 0.8,
+                delay: 0.2,
+                ease: 'power3.inOut',
                 onComplete: () => {
                     preloader.classList.add('hidden');
                     initHeroAnimations();
@@ -224,30 +221,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         loaderBar.style.width = `${progress}%`;
         loaderPercent.textContent = `${progress < 10 ? '0' : ''}${progress}%`;
-    }, 40);
+    }, 35);
 
     // ==========================================================================
-    // 4. ANIMATIONS GSAP INTRO & REVEALS
+    // 4. ANIMATIONS GSAP & REVEALS
     // ==========================================================================
     function initHeroAnimations() {
         const tl = gsap.timeline();
-        tl.from('.hero-label', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' })
-          .from('.hero-title', { y: 50, opacity: 0, duration: 1, ease: 'power4.out' }, '-=0.5')
-          .from('.hero-status', { scale: 0.8, opacity: 0, duration: 0.6, ease: 'back.out(1.7)' }, '-=0.6')
-          .from('.hero-sub', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
-          .from('.hero-desc', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
-          .from('.hero-btns .btn', { y: 20, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'power3.out' }, '-=0.4')
+        tl.from('.hero-label', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' })
+          .from('.hero-title', { y: 40, opacity: 0, duration: 1, ease: 'power4.out' }, '-=0.5')
+          .from('.hero-status', { scale: 0.9, opacity: 0, duration: 0.6, ease: 'back.out(1.5)' }, '-=0.6')
+          .from('.hero-sub', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+          .from('.hero-desc', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
+          .from('.hero-btns .btn', { y: 20, opacity: 0, duration: 0.6, stagger: 0.15, ease: 'power3.out' }, '-=0.4')
           .from('.hero-scroll', { opacity: 0, duration: 0.8 }, '-=0.2');
     }
 
-    // GSAP ScrollTrigger Reveals sur chaque section
     gsap.utils.toArray('.reveal').forEach((el) => {
         gsap.fromTo(el, 
-            { y: 50, opacity: 0 },
+            { y: 40, opacity: 0 },
             {
                 y: 0,
                 opacity: 1,
-                duration: 1,
+                duration: 0.9,
                 ease: 'power3.out',
                 scrollTrigger: {
                     trigger: el,
@@ -260,12 +256,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     gsap.utils.toArray('.reveal-scale').forEach((el) => {
         gsap.fromTo(el, 
-            { scale: 0.9, opacity: 0 },
+            { scale: 0.92, opacity: 0 },
             {
                 scale: 1,
                 opacity: 1,
                 duration: 0.8,
-                ease: 'back.out(1.4)',
+                ease: 'power3.out',
                 scrollTrigger: {
                     trigger: el,
                     start: 'top 85%',
@@ -276,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================================================
-    // 5. INTERACTION CARTE 3D (EFFET DE PROFONDEUR & TILT)
+    // 5. CARTE 3D TILT PHYSICS
     // ==========================================================================
     const cards3D = document.querySelectorAll('.card-3d');
 
@@ -289,10 +285,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
 
-            const rotateX = ((y - centerY) / centerY) * -12;
-            const rotateY = ((x - centerX) / centerX) * 12;
+            const rotateX = ((y - centerY) / centerY) * -10;
+            const rotateY = ((x - centerX) / centerX) * 10;
 
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(8px)`;
         });
 
         card.addEventListener('mouseleave', () => {
@@ -301,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================================================
-    // 6. CURSEUR PERSONNALISÉ MAGNÉTIQUE
+    // 6. CURSEUR MAGNÉTIQUE
     // ==========================================================================
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorHalo = document.querySelector('.cursor-halo');
@@ -316,11 +312,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateCursor() {
-        // Point instantané
         cursorDot.style.left = `${cursorX}px`;
         cursorDot.style.top = `${cursorY}px`;
 
-        // Smooth Halo Lerp
         haloX += (cursorX - haloX) * 0.15;
         haloY += (cursorY - haloY) * 0.15;
 
@@ -331,7 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     updateCursor();
 
-    // Effet Hover sur liens/boutons
     magneticLinks.forEach((elem) => {
         elem.addEventListener('mouseenter', () => {
             document.body.classList.add('cursor-hover');
@@ -342,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================================================
-    // 7. NAVBAR SCROLL & MENU MOBILE
+    // 7. MENU & SMOOTH SCROLL ANCHORS
     // ==========================================================================
     const navbar = document.querySelector('.navbar');
     const toggle = document.querySelector('.menu-toggle');
@@ -367,7 +360,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Ancre Smooth Scroll avec Lenis
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
