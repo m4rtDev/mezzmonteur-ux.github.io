@@ -3,234 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mezz — Monteur Video</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='28' font-size='28'>M</text></svg>">
-</head>
-<body style="position:relative">
+    <title>Developper and Monteur</title>
     
-    <!-- Curseur personnalisé -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/cursor.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
 
-    <!-- Scène 3D -->
-    <canvas id="bgCanvas"></canvas>
+    <!-- Ecran de Chargement Preloader -->
+    <div id="loader" class="loader-overlay">
+        <div class="loader-content">
+            <div class="loader-logo" id="loader-logo">CREATIVE</div>
+            <div class="loader-bar-bg">
+                <div class="loader-bar-fill" id="loader-bar"></div>
+            </div>
+            <div class="loader-percentage" id="loader-percent">0%</div>
+        </div>
+    </div>
 
-    <div id="smooth-wrapper">
+    <!-- Canvas WebGL Background 3D -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Curseur Personnalisé Premium -->
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="custom-cursor-follower" id="cursor-follower"></div>
+    <canvas id="cursor-trail-canvas"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <a href="#" class="logo" id="site-logo" data-magnetic>CREATIVE.LAB</a>
+        <nav class="nav-links">
+            <a href="#hero" data-magnetic>Accueil</a>
+            <a href="#videos" data-magnetic>Réalisations</a>
+            <a href="#youtubeurs" data-magnetic>Collaborations</a>
+            <a href="#contact" data-magnetic>Contact</a>
+        </nav>
+    </header>
+
+    <!-- UI Main Structure -->
+    <main id="smooth-wrapper">
         <div id="smooth-content">
-            <nav class="navbar">
-                <div class="nav-container">
-                    <a href="#" class="logo">mezz</a>
-                    <div class="nav-links">
-                        <a href="#services">Services</a>
-                        <a href="#about">À propos</a>
-                        <a href="#portfolio">Portfolio</a>
-                        <a href="#collab">Collab</a>
-                        <a href="#contact">Contact</a>
-                    </div>
-                    <button class="menu-toggle" aria-label="Menu">☰</button>
-                </div>
-            </nav>
 
-            <section class="hero" id="top">
-                <div class="hero-inner">
-                    <p class="hero-label">MONTEUR VIDEO</p>
-                    <h1 class="hero-title">mezz</h1>
-                    <p style="font-size:.7rem;color:#22a67e;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;font-weight:600">&#9679; Disponible pour mission</p>
-                    <p class="hero-sub">Montage percutant. Image maîtrisée.</p>
-                    <p class="hero-desc">
-                        Je transforme des idées brutes en montages courts et nets, intenses et mémorables.
-                    </p>
-                    <div class="hero-btns">
-                        <a href="#portfolio" class="btn btn-primary magnetic" data-strength="20">Voir la sélection</a>
-                        <a href="#contact" class="btn btn-outline magnetic" data-strength="20">Me contacter</a>
-                    </div>
-                </div>
-                <div class="hero-scroll">SCROLL</div>
-            </section>
-
-            <section id="services" class="services">
-                <div class="container">
-                    <div class="section-header reveal">
-                        <p class="section-label">Services</p>
-                        <h2>Formats <span class="outline">maîtrisés</span></h2>
-                    </div>
-                    <div class="services-grid">
-                        <div class="service-card reveal">
-                            <span class="service-number">01</span>
-                            <h3>Montage court</h3>
-                            <p>Coupe précise, tempo fort et structure pensée pour retenir l'attention dès les premières secondes.</p>
-                        </div>
-                        <div class="service-card reveal">
-                            <span class="service-number">02</span>
-                            <h3>Packaging video</h3>
-                            <p>Habillage, transitions, sous-titres, sound design et finition visuelle cohérente.</p>
-                        </div>
-                        <div class="service-card reveal">
-                            <span class="service-number">03</span>
-                            <h3>Direction creative</h3>
-                            <p>Une présentation premium pour donner à la chaîne, au reel ou au projet une vraie présence.</p>
-                        </div>
+            <!-- Hero Section -->
+            <section id="hero" class="section hero-section">
+                <div class="hero-container">
+                    <h1 class="hero-title" id="hero-title-text">
+                        EXPÉRIENCE DIGITAL<br><span class="gradient-text">IMMERSIVE 3D</span>
+                    </h1>
+                    <p class="hero-subtitle">Concepteur Visual, Motion Designer & Développeur Creative WebGL.</p>
+                    <div class="hero-cta">
+                        <a href="#videos" class="btn btn-primary" data-magnetic>Explorer les Projets</a>
+                        <a href="#contact" class="btn btn-secondary" data-magnetic>Me Contacter</a>
                     </div>
                 </div>
             </section>
 
-            <section id="about" class="about-section">
-                <div class="container">
-                    <div class="section-header reveal">
-                        <p class="section-label">À propos</p>
-                        <h2>Qui est <span class="outline">mezz</span></h2>
-                    </div>
-                    <div class="about-grid reveal" style="max-width:700px">
-                        <p class="about-text">Monteur vidéo passionné par le montage court et le packaging. J'aime donner du rythme, de la cohérence et de l'impact à chaque projet.</p>
-                    </div>
+            <!-- Section Videos / Réalisations 3D -->
+            <section id="videos" class="section videos-section">
+                <div class="section-header">
+                    <h2 class="section-title">RÉALISATIONS VIDÉO</h2>
+                    <p class="section-desc">Pivotez, saisissez et déplacez les cartes 3D interactives.</p>
+                </div>
+                <div id="video-categories-filter" class="filter-bar">
+                    <button class="filter-btn active" data-category="all">Tous</button>
+                </div>
+                <div id="videos-grid" class="cards-3d-grid">
+                    <!-- Généré dynamiquement depuis Supabase -->
                 </div>
             </section>
 
-            <section class="tools">
-                <div class="container">
-                    <div class="tools-content reveal">
-                        <p class="section-label">Outils</p>
-                        <h2>Mes outils <span class="outline">de travail</span></h2>
-                        <div class="tools-list">
-                            <span class="hover-text">Adobe Premiere Pro</span>
-                            <span class="hover-text">Adobe After Effects</span>
-                            <span class="hover-text">Adobe Audition</span>
-                        </div>
-                        <blockquote class="tools-quote">
-                            &ldquo;Never give in. Never give in. Never, never, never, never&mdash;in nothing, great or small&mdash;never give in, except to convictions of honour and good sense.&rdquo;
-                        </blockquote>
-                    </div>
+            <!-- Section Youtubeurs / Collaborations -->
+            <section id="youtubeurs" class="section youtubeurs-section">
+                <div class="section-header">
+                    <h2 class="section-title">CREATORS & CREWS</h2>
+                    <p class="section-desc">Les créateurs de contenu avec lesquels j'ai collaboré.</p>
+                </div>
+                <div id="youtubeurs-list" class="youtubeurs-grid">
+                    <!-- Généré dynamiquement depuis Supabase -->
                 </div>
             </section>
 
-            <section id="portfolio" class="portfolio">
-                <div class="container">
-                    <div class="section-header reveal">
-                        <p class="section-label">Portfolio</p>
-                        <h2>Montages <span class="outline">réalisés</span></h2>
-                    </div>
-                    <div class="portfolio-grid">
-                        <!-- Items Portfolio conservés à l'identique -->
-                        <div class="portfolio-item reveal-scale">
-                            <div class="portfolio-thumb magnetic-wrap">
-                                <img src="https://img.youtube.com/vi/-_bcmHst_Yc/hqdefault.jpg" alt="Video" loading="lazy">
-                                <a href="https://youtu.be/-_bcmHst_Yc" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
-                            </div>
+            <!-- Section Contact -->
+            <section id="contact" class="section contact-section">
+                <div class="glass-card contact-card">
+                    <h2 class="section-title">DÉMARRER UN PROJET</h2>
+                    <form id="contact-form" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="contact-name" placeholder="Votre Nom" required>
                         </div>
-                        <div class="portfolio-item reveal-scale">
-                            <div class="portfolio-thumb magnetic-wrap">
-                                <img src="https://img.youtube.com/vi/fMvX_PeXom4/hqdefault.jpg" alt="Video" loading="lazy">
-                                <a href="https://youtu.be/fMvX_PeXom4" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
-                            </div>
+                        <div class="form-group">
+                            <input type="email" id="contact-email" placeholder="Votre Email" required>
                         </div>
-                        <div class="portfolio-item reveal-scale">
-                            <div class="portfolio-thumb magnetic-wrap">
-                                <img src="https://img.youtube.com/vi/qulAzY_eMTE/hqdefault.jpg" alt="Video" loading="lazy">
-                                <a href="https://youtu.be/qulAzY_eMTE" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
-                            </div>
+                        <div class="form-group">
+                            <input type="text" id="contact-subject" placeholder="Sujet" required>
                         </div>
-                        <div class="portfolio-item reveal-scale">
-                            <div class="portfolio-thumb magnetic-wrap">
-                                <img src="https://img.youtube.com/vi/sFIP1reqB_4/hqdefault.jpg" alt="Video" loading="lazy">
-                                <a href="https://youtu.be/sFIP1reqB_4" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
-                            </div>
+                        <div class="form-group">
+                            <textarea id="contact-message" rows="5" placeholder="Votre Message..." required></textarea>
                         </div>
-                        <div class="portfolio-item reveal-scale">
-                            <div class="portfolio-thumb magnetic-wrap">
-                                <img src="https://img.youtube.com/vi/AfmDTQgVIVk/hqdefault.jpg" alt="Video" loading="lazy">
-                                <a href="https://youtu.be/AfmDTQgVIVk" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
-                            </div>
-                        </div>
-                        <div class="portfolio-item reveal-scale">
-                            <div class="portfolio-thumb magnetic-wrap">
-                                <img src="https://img.youtube.com/vi/cbgoe5sceXk/hqdefault.jpg" alt="Video" loading="lazy">
-                                <a href="https://youtu.be/cbgoe5sceXk" class="portfolio-overlay" target="_blank" rel="noopener"><span>Voir →</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-more reveal">
-                        <a href="https://www.youtube.com/playlist?list=PLr6Ba9RZO-sZ-AjnjAxozsWwqyTn204Md" target="_blank" rel="noopener" class="btn btn-outline magnetic" data-strength="15">Playlist complète →</a>
-                    </div>
-                </div>
-            </section>
-
-            <section id="collab" class="contact">
-                <div class="container">
-                    <div class="section-header reveal">
-                        <p class="section-label">Collaborations</p>
-                        <h2>Ils m'ont <span class="outline">fait confiance</span></h2>
-                    </div>
-                    <div class="collab-grid">
-                        <a href="https://www.youtube.com/@cubi-game6913" target="_blank" rel="noopener" class="collab-card reveal-left magnetic" data-strength="10">
-                            <div class="collab-avatar">
-                                <img src="https://yt3.googleusercontent.com/einN5wa9bMaQ_-cna0F8ZrExNG9nvBKZnCZCObLQHOOsYnmsMiZt9l8G0inbGP9t2uxmLR9JcA=s160-c-k-c0x00ffffff-no-rj" alt="Cubi Game" loading="lazy">
-                            </div>
-                            <div class="collab-info">
-                                <h3>Cubi Game</h3>
-                                <span>Influenceur</span>
-                            </div>
-                        </a>
-                        <a href="https://www.youtube.com/@StickOnThePlace" target="_blank" rel="noopener" class="collab-card reveal-right magnetic" data-strength="10">
-                            <div class="collab-avatar">
-                                <img src="https://yt3.googleusercontent.com/R5N_tGfLAab49iqHK6BfvVW_jr8749gIKCWH1dE57E0e2FIbyk6wTtMCtfRrAYEPzsTEFayQ=s160-c-k-c0x00ffffff-no-rj" alt="Stick On The Place" loading="lazy">
-                            </div>
-                            <div class="collab-info">
-                                <h3>Stick On The Place</h3>
-                                <span>Influenceur</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact" class="contact">
-                <div class="container">
-                    <div class="contact-content reveal">
-                        <p class="section-label">Contact</p>
-                        <h2>Parlons <span class="outline">de ton projet</span></h2>
-                        <div class="contact-links">
-                            <a href="https://discord.gg/94gzWQNedJ" target="_blank" rel="noopener" class="btn btn-primary magnetic" data-strength="20">Discord — xmezzedv</a>
-                            <a href="mailto:mezzmonteur@gmail.com" class="btn btn-outline magnetic" data-strength="20">mezzmonteur@gmail.com</a>
-                            <div class="contact-social">
-                                <a href="https://x.com/mezzedv" target="_blank" rel="noopener" class="hover-text">X / Twitter</a>
-                                <a href="https://www.youtube.com/@mezzmonteur" target="_blank" rel="noopener" class="hover-text">YouTube</a>
-                                <a href="https://www.youtube.com/playlist?list=PLr6Ba9RZO-sZ-AjnjAxozsWwqyTn204Md" target="_blank" rel="noopener" class="hover-text">Playlist</a>
-                            </div>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary btn-full" data-magnetic>Envoyer le Message</button>
+                    </form>
+                    <div id="contact-feedback" class="feedback-msg"></div>
                 </div>
             </section>
 
             <footer class="footer">
-                <div class="footer-container">
-                    <p class="footer-copy">© 2026 — mezz</p>
-                    <a href="#top" class="footer-top hover-text">Revenir en haut ↑</a>
-                </div>
+                <p>&copy; 2026 Creative Lab. Tous droits réservés.</p>
             </footer>
+
+        </div>
+    </main>
+
+    <!-- DASHBOARD ADMIN MODAL (#admin) -->
+    <div id="admin-dashboard" class="admin-overlay hidden">
+        <div class="admin-container glass-card">
+            <div class="admin-sidebar">
+                <div class="admin-logo">ADMIN PANEL</div>
+                <ul class="admin-menu">
+                    <li class="active" data-tab="tab-videos">Vidéos</li>
+                    <li data-tab="tab-youtubeurs">Youtubeurs</li>
+                    <li data-tab="tab-categories">Catégories</li>
+                    <li data-tab="tab-settings">Paramètres</li>
+                    <li data-tab="tab-messages">Messages</li>
+                    <li data-tab="tab-analytics">Analytics</li>
+                </ul>
+                <button id="admin-logout-btn" class="btn btn-danger">Déconnexion</button>
+            </div>
+
+            <div class="admin-main">
+                <!-- Section Auth Form -->
+                <div id="admin-auth-view" class="admin-view">
+                    <h2>Connexion Administrateur</h2>
+                    <form id="admin-login-form">
+                        <div class="form-group">
+                            <input type="email" id="admin-email" placeholder="Email Supabase" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="admin-password" placeholder="Mot de passe" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Se Connecter</button>
+                    </form>
+                    <div id="admin-auth-error" class="feedback-msg error"></div>
+                </div>
+
+                <!-- Admin Tab: Videos -->
+                <div id="tab-videos" class="admin-tab-content hidden">
+                    <div class="admin-header-actions">
+                        <h3>Gestion des Vidéos</h3>
+                        <button class="btn btn-primary" onclick="adminModule.openVideoModal()">+ Ajouter Vidéo</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Miniature</th>
+                                    <th>Titre</th>
+                                    <th>Catégorie</th>
+                                    <th>Ordre</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-videos-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Admin Tab: Youtubeurs -->
+                <div id="tab-youtubeurs" class="admin-tab-content hidden">
+                    <div class="admin-header-actions">
+                        <h3>Gestion des Youtubeurs</h3>
+                        <button class="btn btn-primary" onclick="adminModule.openYoutubeurModal()">+ Ajouter Youtubeur</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Avatar</th>
+                                    <th>Nom</th>
+                                    <th>Lien Chaine</th>
+                                    <th>Ordre</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-youtubeurs-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Admin Tab: Categories -->
+                <div id="tab-categories" class="admin-tab-content hidden">
+                    <h3>Gestion des Catégories</h3>
+                    <form id="add-category-form" class="inline-form">
+                        <input type="text" id="new-cat-name" placeholder="Nom Catégorie" required>
+                        <input type="text" id="new-cat-slug" placeholder="Slug (ex: motion-design)" required>
+                        <button type="submit" class="btn btn-primary">Créer</button>
+                    </form>
+                    <ul id="admin-categories-list" class="admin-list"></ul>
+                </div>
+
+                <!-- Admin Tab: Settings -->
+                <div id="tab-settings" class="admin-tab-content hidden">
+                    <h3>Paramètres Généraux du Site</h3>
+                    <form id="admin-settings-form">
+                        <div class="form-group">
+                            <label>Texte Logo</label>
+                            <input type="text" id="setting-logoText">
+                        </div>
+                        <div class="form-group">
+                            <label>Titre Héro</label>
+                            <input type="text" id="setting-heroTitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Email de Contact</label>
+                            <input type="email" id="setting-contactEmail">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sauvegarder Configuration</button>
+                    </form>
+                </div>
+
+                <!-- Admin Tab: Messages -->
+                <div id="tab-messages" class="admin-tab-content hidden">
+                    <h3>Messages Reçus</h3>
+                    <div id="admin-messages-list"></div>
+                </div>
+
+                <!-- Admin Tab: Analytics -->
+                <div id="tab-analytics" class="admin-tab-content hidden">
+                    <h3>Rapport d'Audience (Analytics)</h3>
+                    <div class="analytics-cards">
+                        <div class="stat-card">
+                            <h4 id="stat-total-views">0</h4>
+                            <p>Pages Vues</p>
+                        </div>
+                        <div class="stat-card">
+                            <h4 id="stat-unique-browsers">0</h4>
+                            <p>Navigateurs Différents</p>
+                        </div>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Page</th>
+                                <th>Navigateur</th>
+                                <th>Appareil</th>
+                                <th>Pays</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-analytics-table-body"></tbody>
+                    </table>
+                </div>
+
+            </div>
         </div>
     </div>
 
-    <!-- Librairies via CDN (Aucun bundler requis) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
-    
-    <!-- Importer Three.js en tant que module ES -->
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-        }
-      }
-    </script>
+    <!-- Dynamic Modals pour l'édition Admin -->
+    <div id="admin-modal" class="modal-overlay hidden">
+        <div class="modal-card glass-card">
+            <h3 id="modal-title">Éditer</h3>
+            <form id="admin-modal-form">
+                <div id="modal-fields"></div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="modal-close-btn">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <!-- Fichiers JS personnalisés -->
-    <script src="js/tracker.js"></script>
-    <script type="module" src="js/webgl.js"></script>
+    <!-- App Main Scripts -->
+    <script src="js/supabase.js"></script>
+    <script src="js/three-scene.js"></script>
+    <script src="js/scroll.js"></script>
+    <script src="js/cursor.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/admin.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
