@@ -3,86 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Développeur Web | Portfolio Premium</title>
-    <meta name="description" content="Création de sites web modernes, rapides et élégants.">
-    <link rel="stylesheet" href="style.css">
-    <!-- Police moderne -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- SEO & Meta Tags -->
+    <title>Mezz | Développeur</title>
+    <meta name="description" content="Portfolio de xmezzedv, Développeur Front-End Senior. Création d'expériences web immersives, 3D et ultra-optimisées.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mezzmonteur.com/">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="xmezzedv | Développeur Front-End Premium">
+    <meta property="og:description" content="Création d'expériences web immersives et ultra-optimisées.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mezzmonteur.com/">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="xmezzedv | Développeur Front-End Premium">
+    <meta name="twitter:description" content="Création d'expériences web immersives et ultra-optimisées.">
+    
+    <!-- Favicon (à ajouter plus tard dans le dossier assets) -->
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Curseur personnalisé -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
+    <!-- Curseur Personnalisé -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
     <!-- Canvas Three.js -->
     <canvas id="webgl-canvas"></canvas>
 
-    <main class="content">
-        <!-- Hero Section -->
-        <section id="hero" class="section hidden">
-            <div class="glass-panel">
-                <h1>Développeur Web</h1>
-                <p class="subtitle">Création de sites web modernes, rapides et élégants.</p>
-                <a href="#contact" class="btn magnetic">Me contacter</a>
-            </div>
-        </section>
+    <!-- Contenu Principal -->
+    <main id="smooth-wrapper">
+        <div id="smooth-content">
+            
+            <!-- Hero Section -->
+            <section id="hero" class="section">
+                <div class="hero-content text-center">
+                    <h1 class="glitch-text" data-text="DÉVELOPPEUR">DÉVELOPPEUR<br><span class="outline-text">FRONT-END</span></h1>
+                    <p class="subtitle gsap-fade-up">Création d'expériences digitales immersives, ultra-rapides et cinématiques.</p>
+                    <a href="#portfolio" class="btn magnetic gsap-fade-up mt-4">Découvrir mes travaux</a>
+                </div>
+            </section>
 
-        <!-- À propos -->
-        <section id="about" class="section hidden">
-            <div class="glass-panel text-left">
-                <h2>À propos</h2>
-                <p>Je conçois des expériences digitales immersives, où la performance technique rencontre un design minimaliste et ultra-fluide. Mon approche se concentre sur l'essentiel : un code propre, une interface intuitive et des performances optimales.</p>
-            </div>
-        </section>
+            <!-- À Propos -->
+            <section id="about" class="section">
+                <div class="container">
+                    <div class="glass-panel gsap-reveal">
+                        <h2 class="section-title">À Propos</h2>
+                        <p class="text-large">Je suis un développeur passionné par l'intersection entre le design et la technologie. Mon objectif : repousser les limites du web avec des animations fluides, des univers 3D et des interfaces minimalistes.</p>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Services -->
-        <section id="services" class="section hidden">
-            <h2>Mes Services</h2>
-            <div class="grid-cards">
-                <div class="card magnetic">
-                    <h3>Sites Vitrines</h3>
-                    <p>Présence en ligne élégante et impactante.</p>
+            <!-- Services -->
+            <section id="services" class="section">
+                <div class="container">
+                    <h2 class="section-title text-center mb-4 gsap-reveal">Expertise</h2>
+                    <div class="grid-3">
+                        <div class="glass-card magnetic gsap-reveal">
+                            <i class="fa-solid fa-code icon-large"></i>
+                            <h3>Développement Web</h3>
+                            <p>Des sites sur-mesure, performants et évolutifs, codés avec les dernières technologies.</p>
+                        </div>
+                        <div class="glass-card magnetic gsap-reveal">
+                            <i class="fa-solid fa-cube icon-large"></i>
+                            <h3>Expériences 3D</h3>
+                            <p>Intégration de scènes WebGL et Three.js pour des univers immersifs inoubliables.</p>
+                        </div>
+                        <div class="glass-card magnetic gsap-reveal">
+                            <i class="fa-solid fa-wand-magic-sparkles icon-large"></i>
+                            <h3>UI/UX Design</h3>
+                            <p>Interfaces minimalistes, élégantes et pensées pour une expérience utilisateur parfaite.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="card magnetic">
-                    <h3>Sur-mesure</h3>
-                    <p>Développement web complexe et personnalisé.</p>
-                </div>
-                <div class="card magnetic">
-                    <h3>UI / UX Design</h3>
-                    <p>Interfaces modernes centrées sur l'utilisateur.</p>
-                </div>
-                <div class="card magnetic">
-                    <h3>Performances</h3>
-                    <p>Optimisation Lighthouse et fluidité 60FPS.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Tarifs -->
-        <section id="pricing" class="section hidden">
-            <div class="glass-panel">
-                <h2>Tarifs</h2>
-                <p class="premium-text">Les tarifs sont communiqués uniquement en privé.</p>
-                <a href="#contact" class="btn magnetic">Demander un devis</a>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section id="contact" class="section hidden">
-            <div class="glass-panel">
-                <h2>Contact</h2>
-                <div class="discord-box magnetic" id="copy-discord">
-                    <span class="label">Discord</span>
-                    <span class="discord-id">xmezzedv</span>
-                    <span class="copy-feedback">Copier</span>
+            <!-- Portfolio -->
+            <section id="portfolio" class="section">
+                <div class="container">
+                    <h2 class="section-title mb-4 gsap-reveal">Travaux Récents</h2>
+                    <div class="portfolio-grid">
+                        <div class="portfolio-item glass-card gsap-reveal magnetic-hover">
+                            <div class="portfolio-img" style="background-color: #111;"></div>
+                            <div class="portfolio-info">
+                                <h3>Édition Limitée</h3>
+                                <p>Site e-commerce premium avec essayage 3D en temps réel.</p>
+                            </div>
+                        </div>
+                        <div class="portfolio-item glass-card gsap-reveal magnetic-hover">
+                            <div class="portfolio-img" style="background-color: #151515;"></div>
+                            <div class="portfolio-info">
+                                <h3>Studio Architecture</h3>
+                                <p>Portfolio immersif avec visites virtuelles et transitions cinématiques.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <a href="mailto:contact@votremail.com" class="btn outline magnetic">Me contacter par email</a>
-            </div>
-        </section>
+            </section>
+
+            <!-- Compétences -->
+            <section id="skills" class="section">
+                <div class="container">
+                    <h2 class="section-title text-center mb-4 gsap-reveal">Skill</h2>
+                    <div class="skills-flex">
+                        <span class="skill-tag gsap-reveal">HTML5</span>
+                        <span class="skill-tag gsap-reveal">CSS3</span>
+                        <span class="skill-tag gsap-reveal">JavaScript ES6</span>
+                        <span class="skill-tag gsap-reveal">Three.js</span>
+                        <span class="skill-tag gsap-reveal">WebGL</span>
+                        <span class="skill-tag gsap-reveal">GSAP</span>
+                        <span class="skill-tag gsap-reveal">Lenis</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Processus -->
+            <section id="process" class="section">
+                <div class="container">
+                    <h2 class="section-title mb-4 gsap-reveal">Processus</h2>
+                    <div class="process-timeline">
+                        <div class="process-step gsap-reveal">
+                            <div class="step-number">01</div>
+                            <h3>Stratégie & Design</h3>
+                            <p>Analyse de vos besoins et conception d'une interface minimaliste et impactante.</p>
+                        </div>
+                        <div class="process-step gsap-reveal">
+                            <div class="step-number">02</div>
+                            <h3>Développement</h3>
+                            <p>Écriture d'un code propre, intégration de la scène Three.js et des animations GSAP.</p>
+                        </div>
+                        <div class="process-step gsap-reveal">
+                            <div class="step-number">03</div>
+                            <h3>Optimisation & Lancement</h3>
+                            <p>Tests de performance (60 FPS), responsive design et déploiement final.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ -->
+            <section id="faq" class="section">
+                <div class="container">
+                    <div class="glass-panel gsap-reveal">
+                        <h2 class="section-title mb-4">Questions Fréquentes</h2>
+                        <div class="faq-item">
+                            <h4>Quels sont vos tarifs ?</h4>
+                            <p class="pricing-notice">Les tarifs sont communiqués uniquement en privé.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Travaillez-vous à distance ?</h4>
+                            <p>Oui, je collabore avec des clients du monde entier avec une communication fluide.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact -->
+            <section id="contact" class="section">
+                <div class="container text-center">
+                    <h2 class="section-title mb-4 gsap-reveal">Démarrons un projet</h2>
+                    
+                    <div class="contact-cards">
+                        <!-- Carte Discord -->
+                        <div class="discord-card glass-card magnetic gsap-reveal" id="discord-btn">
+                            <i class="fa-brands fa-discord"></i>
+                            <div class="discord-info">
+                                <span class="discord-label">Discord</span>
+                                <span class="discord-id">xmezzedv</span>
+                            </div>
+                            <span class="copy-status">Copier</span>
+                        </div>
+
+                        <!-- Bouton Email -->
+                        <a href="mailto:m3rt0@proton.me?subject=Demande%20de%20devis&body=Bonjour%2C%0A%0AJe%20souhaite%20discuter%20de%20mon%20projet.%0A%0AMerci." class="email-btn btn magnetic gsap-reveal">
+                            <i class="fa-solid fa-envelope"></i> Envoyer un e-mail
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="container flex-between">
+                    <p>&copy; 2026 mezzedv. Tous droits réservés.</p>
+                    <p class="pricing-notice-small">Les tarifs sont communiqués uniquement en privé.</p>
+                </div>
+            </footer>
+
+        </div>
     </main>
 
-    <!-- Three.js CDN -->
+    <!-- Scripts Externes -->
+    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="script.js"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Lenis (Smooth Scroll) -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    
+    <!-- Script Principal -->
+    <script src="js/script.js"></script>
 </body>
 </html>
