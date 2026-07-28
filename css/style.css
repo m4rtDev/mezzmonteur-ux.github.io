@@ -1,66 +1,90 @@
+/* ==========================================
+   RESET & VARIABLES
+========================================== */
 :root {
-    --black: #050505;
-    --dark-gray: #111111;
-    --gray: #888888;
-    --white: #ffffff;
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --bg-color: #050505;
+    --text-primary: #FFFFFF;
+    --text-secondary: #888888;
+    --glass-bg: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glass-hover: rgba(255, 255, 255, 0.05);
+    
+    --font-main: 'Inter', sans-serif;
+    --font-title: 'Syncopate', sans-serif;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none; /* Désactive le curseur par défaut pour les écrans avec souris */
+}
+
+html {
+    /* Cache le scrollbar natif, géré par Lenis */
+    scrollbar-width: none; 
+}
+html::-webkit-scrollbar {
+    display: none;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--black);
-    color: var(--white);
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-main);
     overflow-x: hidden;
-    scroll-behavior: smooth;
+    cursor: none; /* Désactivation du curseur système */
+    -webkit-font-smoothing: antialiased;
 }
 
-/* Canvas Three.js en fond */
-#webgl-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    pointer-events: none;
+/* ==========================================
+   TYPOGRAPHIE
+========================================== */
+h1, h2, h3, .title-font {
+    font-family: var(--font-title);
+    text-transform: uppercase;
 }
 
-/* Typographie */
 h1 {
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 800;
-    letter-spacing: -0.05em;
-    margin-bottom: 1rem;
-    background: linear-gradient(180deg, var(--white) 0%, var(--gray) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.1;
+    letter-spacing: -2px;
 }
 
-h2 {
+.outline-text {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--text-primary);
+}
+
+.section-title {
     font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 600;
-    margin-bottom: 2rem;
-    text-align: center;
+    letter-spacing: -1px;
 }
 
 p {
-    font-size: 1.1rem;
-    color: var(--gray);
+    color: var(--text-secondary);
     line-height: 1.6;
+    font-size: 1.1rem;
 }
 
-/* Layout */
-.content {
+.text-large {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.text-center { text-align: center; }
+.mt-4 { margin-top: 2rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+/* ==========================================
+   LAYOUT
+========================================== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
     position: relative;
-    z-index: 1;
+    z-index: 10;
 }
 
 .section {
@@ -68,165 +92,312 @@ p {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    perspective: 1000px; /* Pour la profondeur 3D */
+    padding: 8rem 0;
+    position: relative;
 }
 
-/* Glassmorphism & Cartes */
-.glass-panel {
+#hero {
+    height: 100vh;
+    padding: 0;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 0 2rem;
+    z-index: 10;
+    pointer-events: none; /* Laisse passer les clics vers le canvas sauf sur les boutons */
+}
+
+/* ==========================================
+   COMPOSANTS & GLASSMORPHISM
+========================================== */
+.glass-panel, .glass-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
-    padding: 4rem 2rem;
-    max-width: 800px;
-    text-align: center;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    padding: 3rem;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.glass-panel:hover {
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.05);
+.glass-card:hover {
+    background: var(--glass-hover);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-.text-left {
-    text-align: left;
-}
-
-.grid-cards {
+.grid-3 {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    max-width: 1200px;
-    width: 100%;
 }
 
-.card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 2.5rem;
-    backdrop-filter: blur(8px);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s ease;
-}
-
-.card:hover {
-    transform: translateY(-10px) scale(1.02);
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.card h3 {
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
+.icon-large {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
 }
 
 /* Boutons */
 .btn {
     display: inline-block;
-    background: var(--white);
-    color: var(--black);
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
+    padding: 1.2rem 3rem;
+    background: var(--text-primary);
+    color: var(--bg-color);
     text-decoration: none;
-    font-weight: 600;
-    margin-top: 2rem;
+    font-family: var(--font-title);
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 50px;
     transition: all 0.3s ease;
-    border: 1px solid var(--white);
+    pointer-events: auto;
+    border: 1px solid var(--text-primary);
 }
 
 .btn:hover {
     background: transparent;
-    color: var(--white);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    box-shadow: 0 0 30px rgba(255,255,255,0.2);
 }
 
-.btn.outline {
-    background: transparent;
-    color: var(--white);
+/* Portfolio */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 3rem;
 }
 
-.btn.outline:hover {
-    background: var(--white);
-    color: var(--black);
+.portfolio-item {
+    padding: 1rem;
+    cursor: none;
 }
 
-/* Discord Box */
-.discord-box {
+.portfolio-img {
+    width: 100%;
+    height: 300px;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.portfolio-item:hover .portfolio-img {
+    transform: scale(1.02);
+}
+
+/* Skills */
+.skills-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.skill-tag {
+    padding: 1rem 2rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    font-family: var(--font-title);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.skill-tag:hover {
+    background: var(--text-primary);
+    color: var(--bg-color);
+}
+
+/* Timeline Processus */
+.process-timeline {
+    border-left: 1px solid var(--glass-border);
+    padding-left: 3rem;
+    margin-left: 2rem;
+}
+
+.process-step {
+    position: relative;
+    margin-bottom: 4rem;
+}
+
+.process-step::before {
+    content: '';
+    position: absolute;
+    left: -3.5rem;
+    top: 0;
+    width: 1rem;
+    height: 1rem;
+    background: var(--text-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.step-number {
+    font-family: var(--font-title);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+/* FAQ & Tarifs */
+.faq-item {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+.faq-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.faq-item h4 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+.pricing-notice {
+    color: var(--text-primary);
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* Contact */
+.contact-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.discord-card {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: var(--dark-gray);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    padding: 1rem 2rem;
-    margin: 2rem auto;
+    gap: 1.5rem;
+    padding: 1.5rem 3rem;
     max-width: 400px;
-    transition: all 0.3s ease;
+    width: 100%;
+    justify-content: space-between;
+    cursor: none;
 }
 
-.discord-box:hover {
-    border-color: var(--gray);
-    background: #1a1a1a;
+.discord-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 
-.discord-box .label { color: var(--gray); font-size: 0.9rem; }
-.discord-box .discord-id { font-weight: 600; font-size: 1.2rem; }
-.discord-box .copy-feedback { font-size: 0.8rem; background: var(--white); color: var(--black); padding: 0.2rem 0.5rem; border-radius: 4px; transition: opacity 0.3s; }
+.discord-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-/* Animations au scroll (Intersection Observer) */
-.hidden {
+.discord-id {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.copy-status {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.discord-card:hover .copy-status {
+    background: var(--text-primary);
+    color: var(--bg-color);
+}
+
+.email-btn i {
+    margin-right: 0.5rem;
+}
+
+/* Footer */
+.footer {
+    padding: 3rem 0;
+    border-top: 1px solid var(--glass-border);
+    background: var(--bg-color);
+}
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.pricing-notice-small {
+    font-size: 0.8rem;
+}
+
+/* ==========================================
+   CANVAS 3D BACKGROUND
+========================================== */
+#webgl-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1; /* Derrière le contenu */
+    pointer-events: none;
+}
+
+#smooth-wrapper {
+    position: relative;
+    z-index: 2; /* Devant le canvas */
+}
+
+/* ==========================================
+   CURSEUR PERSONNALISÉ
+========================================== */
+.cursor-dot, .cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--text-primary);
+}
+
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+/* État Hover global via JS */
+body.hover-state .cursor-outline {
+    width: 70px;
+    height: 70px;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+    border-color: var(--text-primary);
+}
+body.hover-state .cursor-dot {
     opacity: 0;
-    transform: translateY(100px) translateZ(-200px) rotateX(10deg);
-    filter: blur(10px);
-    transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.visible {
-    opacity: 1;
-    transform: translateY(0) translateZ(0) rotateX(0);
-    filter: blur(0);
-}
-
-/* Curseur personnalisé (Désactivé sur tactile) */
-@media (pointer: fine) {
-    .cursor, .cursor-follower {
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-    }
-    
-    .cursor {
-        width: 8px;
-        height: 8px;
-        background: var(--white);
-        transition: width 0.3s, height 0.3s;
-    }
-    
-    .cursor-follower {
-        width: 40px;
-        height: 40px;
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        transition: transform 0.1s ease-out, width 0.3s, height 0.3s, border-color 0.3s;
-    }
-
-    /* États du curseur au survol */
-    body.hovering .cursor { width: 0; height: 0; }
-    body.hovering .cursor-follower {
-        width: 60px;
-        height: 60px;
-        background: rgba(255, 255, 255, 0.1);
-        border-color: var(--white);
-        backdrop-filter: blur(2px);
-    }
-}
-@media (pointer: coarse) {
-    * { cursor: auto; }
-    .cursor, .cursor-follower { display: none; }
+/* Désactivation sur mobile */
+@media (max-width: 768px) {
+    * { cursor: auto !important; }
+    .cursor-dot, .cursor-outline { display: none !important; }
+    .section-title { font-size: 2.5rem; }
+    h1 { font-size: 3rem; }
+    .portfolio-grid { grid-template-columns: 1fr; }
 }
