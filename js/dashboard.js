@@ -2,6 +2,7 @@ import { clearSession, getSession } from './auth.js';
 import {
     buildStats,
     exportVisitsCsv,
+    fetchVisitsFromWorker,
     getReviews,
     resetVisits,
     saveReviews,
@@ -19,6 +20,7 @@ function initialiseDashboard() {
     const charts = new Map();
     const refreshDelay = 30_000;
     let refreshTimer;
+    let cachedVisits = null;
 
     const dateElement = document.getElementById('dashboard-date');
     const periodSelect = document.getElementById('period');
@@ -68,6 +70,7 @@ function initialiseDashboard() {
 
     function lineChart(labels, values) {
         const canvas = document.getElementById('visits-chart');
+        if (!canvas) return;
         const context = canvas.getContext('2d');
         const gradient = context.createLinearGradient(0, 0, 0, 260);
         gradient.addColorStop(0, 'rgba(255,255,255,0.11)');
@@ -198,14 +201,15 @@ function initialiseDashboard() {
     function renderRecent(visits) {
         const tableBody = document.getElementById('recent-visits');
         const count = document.getElementById('recent-count');
+        if (!tableBody) return;
         tableBody.replaceChildren();
-        count.textContent = `${visits.length} entrée${visits.length > 1 ? 's' : ''}`;
+        if (count) count.textContent = `${visits.length} entrée${visits.length > 1 ? 's' : ''}`;
 
         if (visits.length === 0) {
             const row = document.createElement('tr');
             const cell = document.createElement('td');
             cell.className = 'table-empty';
-            cell.colSpan = 5;
+            cell.colSpan = 8;
             cell.textContent = 'Aucune visite enregistrée pour cette période.';
             row.append(cell);
             tableBody.append(row);
@@ -214,7 +218,16 @@ function initialiseDashboard() {
 
         visits.forEach((visit) => {
             const row = document.createElement('tr');
-            [visit.date, visit.page, visit.browser, visit.device, visit.referrer].forEach((value) => {
+            [
+                visit.date,
+                visit.page,
+                visit.ip || '—',
+                visit.city || '—',
+                visit.country || '—',
+                visit.browser,
+                visit.device,
+                visit.referrer,
+            ].forEach((value) => {
                 const cell = document.createElement('td');
                 cell.textContent = value || '—';
                 row.append(cell);
@@ -223,8 +236,12 @@ function initialiseDashboard() {
         });
     }
 
-    function renderStatistics() {
-        const stats = buildStats(Number(periodSelect.value));
+    async function renderStatistics() {
+        const days = Number(periodSelect.value);
+        const workerVisits = await fetchVisitsFromWorker(days);
+        cachedVisits = workerVisits;
+
+        const stats = buildStats(days, workerVisits);
         setMetric('metric-total', stats.total);
         setMetric('metric-today', stats.today);
         setMetric('metric-unique', stats.unique);
@@ -232,8 +249,10 @@ function initialiseDashboard() {
         setMetric('metric-active', stats.active);
 
         const trend = document.getElementById('metric-trend');
-        trend.textContent = `${stats.trend >= 0 ? '+' : ''}${stats.trend}%`;
-        trend.classList.toggle('is-negative', stats.trend < 0);
+        if (trend) {
+            trend.textContent = `${stats.trend >= 0 ? '+' : ''}${stats.trend}%`;
+            trend.classList.toggle('is-negative', stats.trend < 0);
+        }
 
         lineChart(stats.labels, stats.lineCounts);
         pagesChart(stats.pages);
@@ -246,6 +265,7 @@ function initialiseDashboard() {
 
     function renderReviews() {
         const container = document.getElementById('review-list');
+        if (!container) return;
         const reviews = getReviews();
         container.replaceChildren();
 
@@ -337,33 +357,42 @@ function initialiseDashboard() {
         });
     });
 
-    periodSelect.addEventListener('change', () => {
-        renderStatistics();
-        scheduleRefresh();
-    });
+    if (periodSelect) {
+        periodSelect.addEventListener('change', () => {
+            renderStatistics();
+            scheduleRefresh();
+        });
+    }
 
-    resetButton.addEventListener('click', () => {
-        if (!window.confirm('Réinitialiser toutes les statistiques locales ?')) return;
-        resetVisits();
-        renderStatistics();
-    });
+    if (resetButton) {
+        resetButton.addEventListener('click', () => {
+            if (!window.confirm('Réinitialiser toutes les statistiques locales et distantes ?')) return;
+            resetVisits();
+            renderStatistics();
+        });
+    }
 
-    exportButton.addEventListener('click', () => {
-        const blob = new Blob([`\uFEFF${exportVisitsCsv()}`], { type: 'text/csv;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `mezz-visites-${new Date().toISOString().slice(0, 10)}.csv`;
-        document.body.append(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(url);
-    });
+    if (exportButton) {
+        exportButton.addEventListener('click', () => {
+            const csv = exportVisitsCsv(cachedVisits);
+            const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `mezz-visites-${new Date().toISOString().slice(0, 10)}.csv`;
+            document.body.append(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+        });
+    }
 
-    logoutButton.addEventListener('click', () => {
-        clearSession();
-        window.location.replace('/login/?logout=1');
-    });
+    if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+            clearSession();
+            window.location.replace('/login/?logout=1');
+        });
+    }
 
     renderStatistics();
     scheduleRefresh();

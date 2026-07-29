@@ -489,13 +489,29 @@
         <div class="container footer-inner">
             <a href="#home" class="navbar-logo" data-cursor="hover">MEZZ<span class="dot">.</span></a>
             <p class="footer-text">Monteur Vidéo & Sound Designer — Créé avec passion.</p>
-            <p class="footer-copyright">© <span id="current-year"></span> Mezz. Tous droits réservés.</p>
+            <p class="footer-copyright">© <span id="current-year"></span> Mezz. Tous droits réservés. · <a href="/confidentialite/" style="color:#888;text-decoration:underline;">Confidentialité</a></p>
         </div>
 
         <button class="back-to-top magnetic" id="back-to-top" aria-label="Retour en haut de page" data-cursor="hover">
             <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
         </button>
     </footer>
+
+    <!-- ============================================================
+         BANDEAU DE CONSENTEMENT (RGPD)
+    ============================================================= -->
+    <div class="consent-banner" id="consent-banner" role="dialog" aria-label="Gestion des cookies et données personnelles" hidden>
+        <div class="consent-content">
+            <p class="consent-title">Consentement aux statistiques</p>
+            <p class="consent-text">
+                Ce site utilise des statistiques de fréquentation conservées pendant 365 jours pour mesurer l'audience et améliorer l'expérience. Consulter la <a href="/confidentialite/" class="consent-link">politique de confidentialité</a>.
+            </p>
+        </div>
+        <div class="consent-actions">
+            <button type="button" class="consent-btn consent-btn-accept" id="consent-accept">Accepter</button>
+            <button type="button" class="consent-btn consent-btn-decline" id="consent-decline">Refuser</button>
+        </div>
+    </div>
 
     <!-- ============================================================
          TOAST — Confirmation de copie
