@@ -1,31 +1,16 @@
-(function() {
-    var ua = navigator.userAgent;
-    var browser = 'Autre';
-    if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Chrome';
-    else if (ua.includes('Firefox')) browser = 'Firefox';
-    else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari';
-    else if (ua.includes('Edg')) browser = 'Edge';
+import { recordVisit } from './js/analytics-store.js';
 
-    var device = /Mobi|Android/i.test(ua) ? 'Mobile' : 'Desktop';
-
-    var debugTrack = true;
-
-    function send() {
-        try {
-            var x = new XMLHttpRequest();
-            x.open('POST', '/api/visit', true);
-            x.setRequestHeader('Content-Type', 'application/json');
-            x.send(JSON.stringify({
-                page: window.location.pathname,
-                browser: browser,
-                device: device,
-                referrer: document.referrer || 'direct'
-            }));
-        } catch(e) {
-            if (debugTrack) console.log('track error', e)
-        }
+function trackCurrentPage() {
+    try {
+        recordVisit();
+    } catch (error) {
+        // Le suivi ne doit jamais empêcher le portfolio de fonctionner.
+        console.debug('Suivi local indisponible.', error);
     }
+}
 
-    if (document.readyState === 'complete') send();
-    else window.addEventListener('load', send);
-})();
+if (document.readyState === 'complete') {
+    trackCurrentPage();
+} else {
+    window.addEventListener('load', trackCurrentPage, { once: true });
+}
