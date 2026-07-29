@@ -1023,8 +1023,6 @@ function initMisc() {
 /* ================================================================
    14. INITIALISATION GÉNÉRALE
 ================================================================ */
-window.addEventListener('load', () => {
-
    window.addEventListener('load', async () => {
 
     await recordVisit();
