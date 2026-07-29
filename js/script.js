@@ -1023,8 +1023,6 @@ function initMisc() {
 ================================================================ */
    window.addEventListener('load', async () => {
 
-    await recordVisit();
-
     initPreloader(() => {
 
         // Curseur + navigation (léger, instantané)
