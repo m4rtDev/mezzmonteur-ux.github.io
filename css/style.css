@@ -1355,3 +1355,112 @@ button:focus-visible,
         scroll-behavior: auto !important;
     }
 }
+
+/* ================================================================
+   27. BANDEAU DE CONSENTEMENT (RGPD)
+================================================================ */
+.consent-banner {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    right: 2rem;
+    max-width: 580px;
+    margin: 0 auto;
+    background: rgba(10, 10, 10, 0.94);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    z-index: 9999;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    color: #e0e0e0;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.consent-banner[hidden] {
+    display: none !important;
+}
+
+.consent-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.25rem;
+}
+
+.consent-text {
+    color: #a0a0a0;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.consent-link {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+}
+
+.consent-link:hover {
+    color: #aaa;
+}
+
+.consent-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.consent-btn {
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.consent-btn-accept {
+    background: #ffffff;
+    color: #000000;
+}
+
+.consent-btn-accept:hover {
+    background: #e0e0e0;
+}
+
+.consent-btn-decline {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.consent-btn-decline:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 640px) {
+    .consent-banner {
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        padding: 1.25rem;
+    }
+    .consent-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    .consent-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+

@@ -1,41 +1,53 @@
 # mezzmonteur.com
 
-Portfolio statique hébergé par GitHub Pages, avec un dashboard d'administration.
+Portfolio statique hébergé par GitHub Pages, avec un dashboard d'administration et des statistiques globales basées sur Cloudflare Workers et D1.
 
-## Routes d'administration
+## Routes du site & administration
 
+- `/` : portfolio principal ;
 - `/login/` : connexion administrateur ;
-- `/dashboard/` : dashboard protégé par une session de 8 heures dans l'onglet courant ;
-- `/login.html` et `/dashboard.html` : anciennes URL redirigées vers les routes propres.
+- `/dashboard/` : dashboard protégé affichant les statistiques de visite complètes ;
+- `/confidentialite/` : page de politique de confidentialité et gestion du consentement RGPD ;
+- `/login.html`, `/dashboard.html` et `/confidentialite.html` : redirections de compatibilité.
 
-Le dashboard renvoie automatiquement vers `/login/` lorsqu'aucune session valide n'existe. Le bouton de déconnexion détruit cette session.
+Le dashboard renvoie automatiquement vers `/login/` lorsqu'aucune session valide n'existe. Le bouton de déconnexion détruit la session.
 
-## Statistiques
+## Statistiques globales (Cloudflare Worker & D1)
 
-GitHub Pages ne fournit ni base de données ni code serveur. Le suivi est donc volontairement local : `tracker.js` enregistre les visites dans `localStorage` et le dashboard construit les graphiques à partir de ces données. Cela permet au dashboard de fonctionner sans endpoints `/web4856` inexistants et sans erreurs réseau.
+Le système de suivi enregistre chaque visite dans une base de données Cloudflare D1 via un Cloudflare Worker (`src/worker.js`).
 
-Conséquence : les chiffres concernent uniquement le navigateur courant. Pour agréger les visites de tous les visiteurs, il faudra connecter un service d'analytics ou une API serveur.
+Chaque visite contient :
+- **Date** (horodatage ISO)
+- **Page**
+- **Adresse IP complète**
+- **Ville**
+- **Pays**
+- **Navigateur**
+- **Appareil** (Desktop, Mobile, Tablette)
+- **Provenance** (Referrer)
 
-## Limite de sécurité de GitHub Pages
+### Rétention des données (365 jours)
 
-Le mot de passe n'est pas stocké en clair : seul un vérificateur PBKDF2 est versionné. Toutefois, un site entièrement statique ne peut pas assurer une authentification serveur réelle. La garde actuelle empêche l'accès normal au dashboard sans passer par `/login/`, mais elle ne doit pas protéger des données sensibles contre une personne capable de modifier le JavaScript dans son navigateur.
+Les données de visite sont automatiquement conservées pendant **365 jours**. Un job quotidien (Cron Trigger `0 3 * * *`) nettoie automatiquement les entrées antérieures à 365 jours dans la base D1.
 
-Pour une protection forte, placer `/dashboard/` derrière Cloudflare Access, Netlify Identity ou un backend qui valide une session avec un cookie `HttpOnly`.
+### Base de données D1 & Migration
 
-## Changer le mot de passe
+Les schémas D1 sont configurés dans `wrangler.toml` et la migration initiale se trouve dans `migrations/0001_initial.sql`.
 
-Exécuter ce script, puis remplacer `salt` et `verifier` dans `js/auth.js` :
+Pour exécuter la migration D1 :
 
 ```bash
-python3 - <<'PY'
-import base64, getpass, hashlib, secrets
-password = getpass.getpass('Nouveau mot de passe : ').encode()
-salt = secrets.token_bytes(16)
-iterations = 210_000
-verifier = hashlib.pbkdf2_hmac('sha256', password, salt, iterations, 32)
-print('salt:', base64.b64encode(salt).decode())
-print('verifier:', base64.b64encode(verifier).decode())
-PY
+npx wrangler d1 migrations apply mezz_analytics_db --remote
+```
+
+### Bandeau de consentement & RGPD
+
+Un bandeau de consentement s'affiche lors de la première visite pour demander l'accord de l'utilisateur ("Accepter" ou "Refuser"). Le consentement est stocké localement (`mezz_consent_v1`). L'utilisateur peut modifier ses choix à tout moment sur la page `/confidentialite/`.
+
+## Lancer les tests
+
+```bash
+npm test
 ```
 
 ## Tester localement
@@ -44,4 +56,4 @@ PY
 python3 -m http.server 8080
 ```
 
-Puis ouvrir `http://localhost:8080/login/`. Il ne faut pas ouvrir les fichiers directement avec `file://`, car les modules JavaScript et Web Crypto nécessitent un contexte web.
+Puis ouvrir `http://localhost:8080/login/` ou `http://localhost:8080/dashboard/`.

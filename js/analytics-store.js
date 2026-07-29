@@ -1,7 +1,10 @@
+import { getConsent } from './consent.js';
+
 const VISITS_KEY = 'mezz_analytics_visits_v1';
 const VISITOR_KEY = 'mezz_analytics_visitor_v1';
 const REVIEWS_KEY = 'mezz_reviews_v1';
 const MAX_VISITS = 5000;
+const RETENTION_MS = 365 * 24 * 60 * 60 * 1000; // 365 jours de rétention
 
 function readJson(key, fallback) {
     try {
@@ -26,7 +29,7 @@ function createId() {
         ?? `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 }
 
-function browserName(userAgent) {
+export function browserName(userAgent = (typeof navigator !== 'undefined' ? navigator.userAgent : '')) {
     if (/Edg\//i.test(userAgent)) return 'Edge';
     if (/Firefox\//i.test(userAgent)) return 'Firefox';
     if (/Chrome\//i.test(userAgent) && !/Edg\//i.test(userAgent)) return 'Chrome';
@@ -34,17 +37,18 @@ function browserName(userAgent) {
     return 'Autre';
 }
 
-function deviceName(userAgent) {
+export function deviceName(userAgent = (typeof navigator !== 'undefined' ? navigator.userAgent : '')) {
     if (/iPad|Tablet/i.test(userAgent)) return 'Tablette';
     return /Mobi|Android|iPhone/i.test(userAgent) ? 'Mobile' : 'Desktop';
 }
 
-function referrerName(referrer) {
+export function referrerName(referrer = (typeof document !== 'undefined' ? document.referrer : '')) {
     if (!referrer) return 'Direct';
 
     try {
         const url = new URL(referrer);
-        if (url.origin === window.location.origin) return 'Interne';
+        const currentOrigin = typeof window !== 'undefined' && window.location && window.location.origin ? window.location.origin : '';
+        if (currentOrigin && url.origin === currentOrigin) return 'Interne';
         return url.hostname.replace(/^www\./, '') || 'Direct';
     } catch {
         return 'Direct';
@@ -74,24 +78,33 @@ export function getVisits() {
     const visits = readJson(VISITS_KEY, []);
     if (!Array.isArray(visits)) return [];
 
+    const now = Date.now();
+    const cutoff = now - RETENTION_MS;
+
     return visits.filter((visit) => {
-        return visit
-            && typeof visit.at === 'string'
-            && !Number.isNaN(new Date(visit.at).getTime());
+        if (!visit || typeof visit.at !== 'string') return false;
+        const time = new Date(visit.at).getTime();
+        return !Number.isNaN(time) && time >= cutoff;
     });
 }
 
-export function recordVisit({
+export async function recordVisit({
     page = window.location.pathname,
     referrer = document.referrer,
     userAgent = navigator.userAgent,
+    workerUrl = '/api/visits',
 } = {}) {
+    if (getConsent() === 'denied') return null;
+
     const visits = getVisits();
     const visit = {
         id: createId(),
         visitor: visitorId(),
         at: new Date().toISOString(),
         page: String(page || '/').slice(0, 160),
+        ip: '127.0.0.1',
+        city: 'Inconnu',
+        country: 'Inconnu',
         browser: browserName(userAgent),
         device: deviceName(userAgent),
         referrer: referrerName(referrer),
@@ -99,7 +112,59 @@ export function recordVisit({
 
     visits.push(visit);
     writeJson(VISITS_KEY, visits.slice(-MAX_VISITS));
+
+    // Synchronisation vers Cloudflare Worker + D1
+    try {
+        const response = await fetch(workerUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: visit.id,
+                visitor: visit.visitor,
+                at: visit.at,
+                page: visit.page,
+                browser: visit.browser,
+                device: visit.device,
+                referrer: visit.referrer,
+                raw_referrer: referrer,
+            }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data?.visit) {
+                visit.ip = data.visit.ip || visit.ip;
+                visit.city = data.visit.city || visit.city;
+                visit.country = data.visit.country || visit.country;
+
+                // Mise à jour de la visite locale avec les données géo/IP du Worker
+                const currentVisits = getVisits();
+                if (currentVisits.length > 0) {
+                    currentVisits[currentVisits.length - 1] = visit;
+                    writeJson(VISITS_KEY, currentVisits.slice(-MAX_VISITS));
+                }
+            }
+        }
+    } catch {
+        // Mode hors-ligne ou fallback local
+    }
+
     return visit;
+}
+
+export async function fetchVisitsFromWorker(days = 30, workerUrl = '/api/visits') {
+    try {
+        const response = await fetch(`${workerUrl}?days=${encodeURIComponent(days)}`);
+        if (response.ok) {
+            const data = await response.json();
+            if (Array.isArray(data.visits)) {
+                return data.visits;
+            }
+        }
+    } catch {
+        // En cas d'erreur réseau, fallback sur les données locales
+    }
+    return null;
 }
 
 function localDateKey(date) {
@@ -132,12 +197,17 @@ function formatVisit(visit) {
             hour: '2-digit',
             minute: '2-digit',
         }).replace(',', ''),
+        ip: visit.ip || '127.0.0.1',
+        city: visit.city || 'Inconnu',
+        country: visit.country || 'Inconnu',
     };
 }
 
-export function buildStats(days = 30) {
-    const safeDays = [7, 30, 90].includes(Number(days)) ? Number(days) : 30;
-    const visits = getVisits();
+export function buildStats(days = 30, customVisits = null) {
+    const validPeriods = [7, 30, 90, 365];
+    const safeDays = validPeriods.includes(Number(days)) ? Number(days) : 30;
+    const visits = Array.isArray(customVisits) ? customVisits : getVisits();
+
     const now = new Date();
     const start = new Date(now);
     start.setHours(0, 0, 0, 0);
@@ -204,7 +274,7 @@ export function buildStats(days = 30) {
         hours,
         recent: [...periodVisits]
             .sort((left, right) => new Date(right.at) - new Date(left.at))
-            .slice(0, 50)
+            .slice(0, 100)
             .map(formatVisit),
     };
 }
@@ -212,6 +282,7 @@ export function buildStats(days = 30) {
 export function resetVisits() {
     try {
         localStorage.removeItem(VISITS_KEY);
+        fetch('/api/visits', { method: 'DELETE' }).catch(() => {});
         return true;
     } catch {
         return false;
@@ -227,12 +298,16 @@ export function saveReviews(reviews) {
     return writeJson(REVIEWS_KEY, reviews);
 }
 
-export function exportVisitsCsv() {
-    const columns = ['date', 'page', 'navigateur', 'appareil', 'provenance', 'visiteur'];
+export function exportVisitsCsv(customVisits = null) {
+    const columns = ['date', 'page', 'ip', 'ville', 'pays', 'navigateur', 'appareil', 'provenance', 'visiteur'];
     const escape = (value) => `"${String(value ?? '').replaceAll('"', '""')}"`;
-    const rows = getVisits().map((visit) => [
+    const visits = Array.isArray(customVisits) ? customVisits : getVisits();
+    const rows = visits.map((visit) => [
         visit.at,
         visit.page,
+        visit.ip || '127.0.0.1',
+        visit.city || 'Inconnu',
+        visit.country || 'Inconnu',
         visit.browser,
         visit.device,
         visit.referrer,
