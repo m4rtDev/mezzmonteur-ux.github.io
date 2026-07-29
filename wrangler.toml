@@ -5,7 +5,7 @@ compatibility_date = "2024-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "mezz_analytics_db"
-database_id = "mezz-analytics-db-id"
+database_id = "3b17c6bf-cb04-4f8b-a7ca-0fcc1bc8d4a4"
 
 [triggers]
 crons = ["0 3 * * *"]
