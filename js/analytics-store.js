@@ -92,7 +92,7 @@ export async function recordVisit({
     page = window.location.pathname,
     referrer = document.referrer,
     userAgent = navigator.userAgent,
-    workerUrl = '/api/visits',
+    workerUrl = 'https://mezzmonteur-analytics.mezzmonteur.workers.dev/api/visits',
 } = {}) {
     if (getConsent() === 'denied') return null;
 
@@ -152,7 +152,7 @@ export async function recordVisit({
     return visit;
 }
 
-export async function fetchVisitsFromWorker(days = 30, workerUrl = '/api/visits') {
+export async function fetchVisitsFromWorker(days = 30, workerUrl = 'https://mezzmonteur-analytics.mezzmonteur.workers.dev/api/visits') {
     try {
         const response = await fetch(`${workerUrl}?days=${encodeURIComponent(days)}`);
         if (response.ok) {
@@ -282,7 +282,10 @@ export function buildStats(days = 30, customVisits = null) {
 export function resetVisits() {
     try {
         localStorage.removeItem(VISITS_KEY);
-        fetch('/api/visits', { method: 'DELETE' }).catch(() => {});
+        fetch('fetch(
+    'https://mezzmonteur-analytics.mezzmonteur.workers.dev/api/visits',
+    { method: 'DELETE' }
+).catch(() => {});', { method: 'DELETE' }).catch(() => {});
         return true;
     } catch {
         return false;
