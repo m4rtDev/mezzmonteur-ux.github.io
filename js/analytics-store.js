@@ -282,10 +282,11 @@ export function buildStats(days = 30, customVisits = null) {
 export function resetVisits() {
     try {
         localStorage.removeItem(VISITS_KEY);
-        fetch('fetch(
-    'https://mezzmonteur-analytics.mezzmonteur.workers.dev/api/visits',
-    { method: 'DELETE' }
-).catch(() => {});', { method: 'DELETE' }).catch(() => {});
+
+        fetch('https://mezzmonteur-analytics.mezzmonteur.workers.dev/api/visits', {
+            method: 'DELETE'
+        }).catch(() => {});
+
         return true;
     } catch {
         return false;
