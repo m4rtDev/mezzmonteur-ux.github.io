@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;-webkit-font-smoothing:antialiased}
+.box{width:100%;max-width:340px;padding:40px 32px;text-align:center}
+.box .m{font-size:1.8rem;font-weight:800;letter-spacing:-.03em;margin-bottom:2px}
+.box .sub{color:#444;font-size:.75rem;margin-bottom:36px;text-transform:uppercase;letter-spacing:2px}
+.in{width:100%;padding:13px 16px;background:#111;border:1px solid #1a1a1a;color:#fff;font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;margin-bottom:12px;border-radius:6px}
+.in:focus{border-color:#444}
+.btn{width:100%;padding:13px;background:#fff;color:#000;border:none;border-radius:6px;font-family:'Inter',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:opacity .3s}
+.btn:hover{opacity:.85}
+.err{color:#ff4444;font-size:.8rem;min-height:22px;margin-top:8px}
+.back{display:inline-block;margin-top:28px;color:#333;font-size:.8rem;transition:color .3s;text-decoration:none}
+.back:hover{color:#fff}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#333;margin:0 2px;animation:pl 1.5s infinite}
+.dot:nth-child(2){animation-delay:.3s}
+.dot:nth-child(3){animation-delay:.6s}
+@keyframes pl{0%,100%{background:#333}50%{background:#fff}}
+</style>
+</head>
+<body>
+<div class="box">
+<div><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+<div class="m" style="margin-top:24px">Admin</div>
+<p class="sub">Accès réservé</p>
+<form id="f">
+<input class="in" type="password" id="p" placeholder="Mot de passe" autocomplete="current-password" required>
+<button class="btn" type="submit">Se connecter</button>
+<p class="err" id="e"></p>
+</form>
+<a href="/" class="back">&larr; Retour au site</a>
+</div>
+<script>
+document.getElementById('f').addEventListener('submit',function(e){
+    e.preventDefault();
+    document.getElementById('e').textContent='La connexion administrateur requiert un service d’authentification qui n’est pas configuré dans ce projet statique.';
+});
+document.getElementById('p').focus();
+</script>
+</body>
+</html>
