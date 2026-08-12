@@ -1,5 +1,0 @@
-node_modules/
-.wrangler/
-.vitest/
-coverage/
-*.log
