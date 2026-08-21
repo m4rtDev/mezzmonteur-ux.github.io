@@ -1,4 +1,4 @@
-# ⚡ MEZZ
+# MEZZ
 
 ### `Web Developer` · `Motion Designer` · `Video Editor`
 
@@ -9,7 +9,7 @@
 
 ---
 
-## 🖤 About me
+##About me
 
 I'm **Mezz**, a creative developer focused on building **modern websites**, creating **motion graphics** and producing **video content**.
 
@@ -31,38 +31,9 @@ I like mixing **design + code + motion** to create digital experiences that feel
 
 ### 💻 Web Development
 
-I build modern, responsive and interactive websites with a strong focus on **UI, animations and user experience**.
-
-* Responsive interfaces
-* Modern UI / UX
-* CSS animations
-* Interactive components
-* Custom landing pages
-* Portfolio websites
-* GitHub Pages deployment
-
 ### 🎨 Motion Design
 
-I create animations and visual content designed to make projects **more dynamic and impactful**.
-
-* Motion graphics
-* Logo animations
-* Transitions
-* Visual effects
-* Social media content
-* Creative animations
-
 ### 🎬 Video Editing
-
-I edit videos with an emphasis on **rhythm, storytelling and visual impact**.
-
-* Short-form content
-* YouTube videos
-* Reels / TikToks
-* Gaming edits
-* Transitions
-* Visual effects
-* Sound design
 
 ---
 
@@ -87,8 +58,6 @@ I edit videos with an emphasis on **rhythm, storytelling and visual impact**.
 
 ### `mezzmonteur.com`
 
-My personal creative portfolio bringing together my work as a **developer, motion designer and video editor**.
-
 **Built with:**
 
 ```txt
@@ -97,37 +66,9 @@ CSS
 JavaScript
 GitHub Pages
 ```
-
-### ✦ Features
-
-* Minimal & modern design
-* Responsive layout
-* Custom animations
-* Dedicated 404 page
-* Custom favicon
-* Portfolio sections
-* Contact section
-* Custom domain
-
 **→ Visit the website:**
 
 ### [mezzmonteur.com](https://mezzmonteur.com)
-
----
-
-## 🎯 My philosophy
-
-```text
-Good design gets attention.
-Good code makes it work.
-Good motion makes it memorable.
-
-→ Combine all three.
-```
-
-I don't want to just make something that **works**.
-
-I want to make something that **feels good to use**.
 
 ---
 
@@ -151,17 +92,6 @@ mezzmonteur.com/
 
 ---
 
-## 📈 Currently
-
-```diff
-+ Building modern websites
-+ Learning new web technologies
-+ Creating motion graphics
-+ Editing videos
-+ Improving my UI/UX skills
-+ Working on creative projects
-```
-
 ---
 
 ## 🔗 Find me
@@ -174,8 +104,6 @@ mezzmonteur.com/
 
 <div align="center">
 
-### Made with 🖤 by **MEZZ**
-
-`WEB` · `MOTION` · `VIDEO`
+### Made by Mezz
 
 </div>
