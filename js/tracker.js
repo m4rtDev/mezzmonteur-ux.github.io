@@ -137,9 +137,9 @@ async function trackVisit() {
 
 
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTracking, {
+    document.addEventListener('DOMContentLoaded', trackVisit, {
         once: true
     });
 } else {
-    initTracking();
+    trackVisit();
 }
