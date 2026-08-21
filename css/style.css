@@ -22,6 +22,7 @@
 
 .loader-inner {
     width: min(400px, 80%);
+    text-align: center;
 }
 
 .loader-title {
