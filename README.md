@@ -79,9 +79,14 @@ mezzmonteur.com/
 │
 ├── 📁 css/
 │   └── style.css
+│   └── 404.css
+│   └── Privacy.css
 │
 ├── 📁 js/
 │   └── scripts.js
+│
+├── 📁 Page/
+│   └── Privacy.html
 │
 ├── 📄 index.html
 ├── 📄 404.html
