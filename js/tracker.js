@@ -112,7 +112,7 @@ async function sendToDiscord(visitor) {
                         }
                     ],
                     footer: {
-                        text: 'Mezz — Visitor Tracker'
+                        text: 'FLOW'
                     }
                 }]
             })
