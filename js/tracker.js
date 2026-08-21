@@ -1,4 +1,4 @@
-const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1530924335949418527/webBXRL5swgj7RyRWxPBddP8VGVWiMvkp3sbZy1_4O5qt1FbLQ5nPIoKM1608jXW3bNZ";
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1540395613345157241/8wSx8CRq4db3j-G33-6HwfQ3jMxxaAeNm_RHwGATgEqHj8Li-19_csg7y8fmVEEfteIp";
 
 const IP_API = 'https://api.ipify.org?format=json';
 
