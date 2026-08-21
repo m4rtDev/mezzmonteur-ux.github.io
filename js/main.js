@@ -4,71 +4,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const progress = document.getElementById("loader-progress");
     const percentText = document.getElementById("loader-percent");
 
-    const images = Array.from(document.images);
+    let progressValue = 0;
 
-    let loaded = 0;
-
-    if (images.length === 0) {
-        finishLoading();
-        return;
+    function setProgress(value) {
+        progressValue = value;
+        progress.style.width = value + "%";
+        percentText.textContent = value + "%";
     }
-
-    function updateProgress() {
-        loaded++;
-
-        const percent = Math.min(
-            Math.round((loaded / images.length) * 100),
-            100
-        );
-
-        progress.style.width = percent + "%";
-        percentText.textContent = percent + "%";
-
-        if (loaded >= images.length) {
-            finishLoading();
+    const loadingAnimation = setInterval(() => {
+        if (progressValue < 90) {
+            setProgress(progressValue + 1);
         }
-    }
+    }, 25);
+    window.addEventListener("load", () => {
+        clearInterval(loadingAnimation);
 
-    function finishLoading() {
+        setProgress(100);
 
-        if (document.fonts) {
-            document.fonts.ready.then(() => {
-                progress.style.width = "100%";
-                percentText.textContent = "100%";
-
-                setTimeout(() => {
-                    loader.classList.add("hidden");
-                }, 400);
-            });
-        } else {
-            progress.style.width = "100%";
-            percentText.textContent = "100%";
-
-            setTimeout(() => {
-                loader.classList.add("hidden");
-            }, 400);
-        }
-    }
-
-    images.forEach(image => {
-
-        if (image.complete) {
-            updateProgress();
-        } else {
-            image.addEventListener("load", updateProgress, {
-                once: true
-            });
-
-            image.addEventListener("error", updateProgress, {
-                once: true
-            });
-        }
+        setTimeout(() => {
+            loader.classList.add("hidden");
+        }, 400);
     });
 
 });
 
 var selectedRating = 0;
-var debugMode = false; // todo remove
+var debugMode = false; 
+
+document.addEventListener('DOMContentLoaded', function() {
+var selectedRating = 0;
+var debugMode = false; 
 
 document.addEventListener('DOMContentLoaded', function() {
 
