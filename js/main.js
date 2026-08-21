@@ -240,7 +240,26 @@ let index = 0;
 let deleting = false;
 
 function typeTitle() {
-    // ...
+    if (!deleting) {
+        document.title = text.slice(0, index);
+        index++;
+
+        if (index > text.length) {
+            deleting = true;
+            setTimeout(typeTitle, 1000);
+            return;
+        }
+    } else {
+        document.title = text.slice(0, index);
+        index--;
+
+        if (index < 0) {
+            deleting = false;
+            index = 0;
+        }
+    }
+
+    setTimeout(typeTitle, deleting ? 100 : 200);
 }
 
 typeTitle();
