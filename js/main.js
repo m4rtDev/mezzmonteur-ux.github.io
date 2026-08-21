@@ -235,3 +235,12 @@ function submitReview() {
     .catch(function() { msg.textContent = 'Erreur réseau'; msg.style.color = '#cc0000'; })
     .then(function() { btn.disabled = false; btn.textContent = "Publier l'avis"; });
 }
+const text = "Mezz";
+let index = 0;
+let deleting = false;
+
+function typeTitle() {
+    // ...
+}
+
+typeTitle();
