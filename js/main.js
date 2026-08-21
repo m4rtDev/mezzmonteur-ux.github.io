@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     const loader = document.getElementById("loader");
     const progress = document.getElementById("loader-progress");
     const percentText = document.getElementById("loader-percent");
@@ -14,13 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
         percentText.textContent = value + "%";
     }
 
+    // Monte progressivement jusqu'à 90%
     const loadingAnimation = setInterval(() => {
         if (progressValue < 90) {
             setProgress(progressValue + 1);
         }
     }, 25);
 
-    function finishLoader() {
+    // Quand toute la page est réellement chargée
+    window.addEventListener("load", () => {
         clearInterval(loadingAnimation);
 
         setProgress(100);
@@ -28,19 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             loader.classList.add("hidden");
         }, 400);
-    }
-    if (document.readyState === "complete") {
-        finishLoader();
-    } else {
-        window.addEventListener("load", finishLoader, { once: true });
-    }
-
+    });
 });
 
-var selectedRating = 0;
-var debugMode = false; 
-
-document.addEventListener('DOMContentLoaded', function() {
 var selectedRating = 0;
 var debugMode = false; 
 
