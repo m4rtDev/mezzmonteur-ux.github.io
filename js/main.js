@@ -1,4 +1,3 @@
-<script>
 document.addEventListener("DOMContentLoaded", () => {
 
     const loader = document.getElementById("loader");
@@ -67,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
-</script>
 
 var selectedRating = 0;
 var debugMode = false; // todo remove
