@@ -14,21 +14,29 @@ async function getVisitorInfo() {
 
     const userAgent = navigator.userAgent;
 
-
     let browser = 'Inconnu';
 
-    if (userAgent.includes('Edg/')) {
-        browser = 'Microsoft Edge';
-    } else if (userAgent.includes('OPR/') || userAgent.includes('Opera')) {
-        browser = 'Opera';
-    } else if (userAgent.includes('Chrome/')) {
-        browser = 'Google Chrome';
-    } else if (userAgent.includes('Firefox/')) {
-        browser = 'Mozilla Firefox';
-    } else if (userAgent.includes('Safari/')) {
-        browser = 'Safari';
-    }
-
+if (userAgent.includes('Edg/')) {
+    browser = 'Microsoft Edge';
+} else if (userAgent.includes('OPR/') || userAgent.includes('Opera')) {
+    browser = 'Opera';
+} else if (userAgent.includes('Vivaldi/')) {
+    browser = 'Vivaldi';
+} else if (userAgent.includes('SamsungBrowser/')) {
+    browser = 'Samsung Internet';
+} else if (userAgent.includes('Firefox/')) {
+    browser = 'Mozilla Firefox';
+} else if (userAgent.includes('CriOS/')) {
+    browser = 'Chrome iOS';
+} else if (userAgent.includes('FxiOS/')) {
+    browser = 'Firefox iOS';
+} else if (userAgent.includes('Chrome/')) {
+    browser = 'Google Chrome';
+} else if (userAgent.includes('Safari/')) {
+    browser = 'Safari';
+} else if (userAgent.includes('MSIE ') || userAgent.includes('Trident/')) {
+    browser = 'Internet Explorer';
+}
     
     let os = 'Inconnu';
 
