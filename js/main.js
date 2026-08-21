@@ -1,3 +1,74 @@
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const loader = document.getElementById("loader");
+    const progress = document.getElementById("loader-progress");
+    const percentText = document.getElementById("loader-percent");
+
+    const images = Array.from(document.images);
+
+    let loaded = 0;
+
+    if (images.length === 0) {
+        finishLoading();
+        return;
+    }
+
+    function updateProgress() {
+        loaded++;
+
+        const percent = Math.min(
+            Math.round((loaded / images.length) * 100),
+            100
+        );
+
+        progress.style.width = percent + "%";
+        percentText.textContent = percent + "%";
+
+        if (loaded >= images.length) {
+            finishLoading();
+        }
+    }
+
+    function finishLoading() {
+
+        if (document.fonts) {
+            document.fonts.ready.then(() => {
+                progress.style.width = "100%";
+                percentText.textContent = "100%";
+
+                setTimeout(() => {
+                    loader.classList.add("hidden");
+                }, 400);
+            });
+        } else {
+            progress.style.width = "100%";
+            percentText.textContent = "100%";
+
+            setTimeout(() => {
+                loader.classList.add("hidden");
+            }, 400);
+        }
+    }
+
+    images.forEach(image => {
+
+        if (image.complete) {
+            updateProgress();
+        } else {
+            image.addEventListener("load", updateProgress, {
+                once: true
+            });
+
+            image.addEventListener("error", updateProgress, {
+                once: true
+            });
+        }
+    });
+
+});
+</script>
+
 var selectedRating = 0;
 var debugMode = false; // todo remove
 
