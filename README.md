@@ -80,15 +80,13 @@ mezzmonteur.com/
 ├── 📁 css/
 │   └── style.css
 │   └── 404.css
-│   └── Privacy.css
+│   └── confidentialite.css
 │
 ├── 📁 js/
 │   └── scripts.js
 │
-├── 📁 Page/
-│   └── Privacy.html
-│
 ├── 📄 index.html
+└── 📄 confidentialite.html
 ├── 📄 404.html
 ├── 📄 CNAME
 ├── 📄 favicon.ico
