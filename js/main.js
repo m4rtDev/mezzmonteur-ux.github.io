@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const progress = document.getElementById("loader-progress");
     const percentText = document.getElementById("loader-percent");
 
+    if (!loader || !progress || !percentText) return;
+
     let progressValue = 0;
 
     function setProgress(value) {
@@ -11,12 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
         progress.style.width = value + "%";
         percentText.textContent = value + "%";
     }
+
     const loadingAnimation = setInterval(() => {
         if (progressValue < 90) {
             setProgress(progressValue + 1);
         }
     }, 25);
-    window.addEventListener("load", () => {
+
+    function finishLoader() {
         clearInterval(loadingAnimation);
 
         setProgress(100);
@@ -24,7 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             loader.classList.add("hidden");
         }, 400);
-    });
+    }
+    if (document.readyState === "complete") {
+        finishLoader();
+    } else {
+        window.addEventListener("load", finishLoader, { once: true });
+    }
 
 });
 
