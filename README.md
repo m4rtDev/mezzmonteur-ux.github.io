@@ -1,4 +1,4 @@
-# 🖤 MEZZ
+# MEZZ
 
 <p align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=000000&height=200&section=header&text=MEZZ&fontColor=ffffff&fontSize=70&animation=fadeIn" width="100%"/>
@@ -14,7 +14,7 @@
 
 ---
 
-## `> whoami`
+## `> I am..`
 
 ```txt
 ╭────────────────────────────────────────────╮
